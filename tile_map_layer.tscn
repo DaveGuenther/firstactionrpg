@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cf2r3cqq8q6yl"]
+
+[ext_resource type="TileSet" uid="uid://c5oww76bx3l8h" path="res://art/tilesets/water_deep_shallow.tres" id="1_0ugm7"]
+
+[node name="TileMapLayer" type="TileMapLayer" unique_id=1032294816]
+texture_filter = 1
+tile_set = ExtResource("1_0ugm7")
