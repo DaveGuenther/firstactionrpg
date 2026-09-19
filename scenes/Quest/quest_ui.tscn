@@ -1,0 +1,132 @@
+[gd_scene format=3 uid="uid://da40ruc6qq07k"]
+
+[ext_resource type="Script" uid="uid://cd37m204j3d6e" path="res://scripts/Quest/quest_ui.gd" id="1_1ltue"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0u54d"]
+bg_color = Color(0, 0.10021403, 0.21414724, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0dqb1"]
+bg_color = Color(0, 0.30713603, 0.62775457, 1)
+border_width_right = 10
+border_color = Color(1.8049032e-07, 0.099743776, 0.25075826, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nk1ib"]
+bg_color = Color(0, 0.17675954, 0.34688026, 1)
+
+[node name="QuestUI" type="Control" unique_id=1779177137]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1ltue")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1283155953]
+layer = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=1667369757]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0u54d")
+
+[node name="Backgrounds" type="HBoxContainer" parent="CanvasLayer/Panel" unique_id=1762532137]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG_1" type="Panel" parent="CanvasLayer/Panel/Backgrounds" unique_id=1732161367]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_0dqb1")
+
+[node name="BG_2" type="Panel" parent="CanvasLayer/Panel/Backgrounds" unique_id=616238891]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_nk1ib")
+
+[node name="Contents" type="VBoxContainer" parent="CanvasLayer/Panel" unique_id=91211031]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+
+[node name="Headings" type="HBoxContainer" parent="CanvasLayer/Panel/Contents" unique_id=607347381]
+layout_mode = 2
+
+[node name="List" type="Label" parent="CanvasLayer/Panel/Contents/Headings" unique_id=200689195]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 30
+text = "Available Quests"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Details" type="Label" parent="CanvasLayer/Panel/Contents/Headings" unique_id=1919336952]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 30
+text = "Quest Details"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Details" type="HBoxContainer" parent="CanvasLayer/Panel/Contents" unique_id=93392970]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="QuestList" type="VBoxContainer" parent="CanvasLayer/Panel/Contents/Details" unique_id=216929405]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="QuestDetails" type="VBoxContainer" parent="CanvasLayer/Panel/Contents/Details" unique_id=1865527455]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="QuestTitle" type="Label" parent="CanvasLayer/Panel/Contents/Details/QuestDetails" unique_id=726883677]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Title"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuestDescription" type="Label" parent="CanvasLayer/Panel/Contents/Details/QuestDetails" unique_id=1914655971]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Description"
+
+[node name="QuestObjectives" type="VBoxContainer" parent="CanvasLayer/Panel/Contents/Details/QuestDetails" unique_id=1921245542]
+layout_mode = 2
+
+[node name="QuestRewards" type="VBoxContainer" parent="CanvasLayer/Panel/Contents/Details/QuestDetails" unique_id=998121167]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="CanvasLayer/Panel" unique_id=661536402]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -41.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 41.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 20
+text = "X"
+
+[connection signal="pressed" from="CanvasLayer/Panel/CloseButton" to="." method="_on_close_button_pressed"]

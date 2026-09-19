@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dlkl6lj1od15y"]
+
+[ext_resource type="Script" uid="uid://bvkauoi3simsx" path="res://scripts/quest_item.gd" id="1_5hayv"]
+[ext_resource type="Texture2D" uid="uid://bcv3y2ovipr4d" path="res://art/objects/carrot.tres" id="2_5hayv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nk1ib"]
+
+[node name="QuestItem" type="Area2D" unique_id=2118020501 groups=["Item"]]
+script = ExtResource("1_5hayv")
+item_icon = ExtResource("2_5hayv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=31641597]
+shape = SubResource("CircleShape2D_nk1ib")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1114516615]
+texture = ExtResource("2_5hayv")
+region_rect = Rect2(64, 48, 16, 16)

@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://dsq2f5335wwyd"]
+
+[ext_resource type="Script" uid="uid://bhf4eukd8gsy8" path="res://scripts/Dialog/DialogUI.gd" id="1_k7txu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0dqb1"]
+bg_color = Color(2.8878452e-07, 0.44036144, 0.1734688, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.23854917, 0.9809548, 0.5262945, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="SystemFont" id="SystemFont_nk1ib"]
+subpixel_positioning = 0
+
+[node name="DialogUI" type="Control" unique_id=366203794]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 354.0
+offset_right = -10.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_k7txu")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1893157911]
+
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=831715251]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -275.0
+offset_right = -10.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0dqb1")
+
+[node name="DialogBox" type="VBoxContainer" parent="CanvasLayer/Panel" unique_id=1901092123]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="DialogSpeaker" type="Label" parent="CanvasLayer/Panel/DialogBox" unique_id=1558948604]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5576705, 0.842635, 0.6678144, 1)
+theme_override_fonts/font = SubResource("SystemFont_nk1ib")
+theme_override_font_sizes/font_size = 20
+text = "NPC Name"
+
+[node name="DialogText" type="Label" parent="CanvasLayer/Panel/DialogBox" unique_id=1649139577]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 23
+text = "Dialog text..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DialogOptions" type="HBoxContainer" parent="CanvasLayer/Panel/DialogBox" unique_id=2002326519]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="CloseButton" type="Button" parent="CanvasLayer/Panel" unique_id=143917180]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -41.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 41.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 20
+text = "X"
+
+[connection signal="pressed" from="CanvasLayer/Panel/CloseButton" to="." method="_on_close_button_pressed"]

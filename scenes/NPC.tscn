@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://2fpo1502jo6q"]
+
+[ext_resource type="Script" uid="uid://bfll58npvyhqc" path="res://scripts/NPC.gd" id="1_6xvi5"]
+[ext_resource type="Texture2D" uid="uid://cmhtqcfqloo52" path="res://art/characters/Skeleton.png" id="1_pbvs3"]
+[ext_resource type="Script" uid="uid://b4txwxpchj0vp" path="res://Resource/Dialog/dialog.gd" id="2_ktgr7"]
+[ext_resource type="PackedScene" uid="uid://dgigalv2t22ay" path="res://scenes/Dialog/dialog_manager.tscn" id="4_jnjht"]
+
+[sub_resource type="Resource" id="Resource_w7kh3"]
+script = ExtResource("2_ktgr7")
+metadata/_custom_type_script = "uid://b4txwxpchj0vp"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_txkty"]
+atlas = ExtResource("1_pbvs3")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ivqcw"]
+atlas = ExtResource("1_pbvs3")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bnirc"]
+atlas = ExtResource("1_pbvs3")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5pgwy"]
+atlas = ExtResource("1_pbvs3")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ssl1b"]
+atlas = ExtResource("1_pbvs3")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w4hcs"]
+atlas = ExtResource("1_pbvs3")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0dqb1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_txkty")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ivqcw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bnirc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5pgwy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ssl1b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w4hcs")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0dqb1"]
+size = Vector2(13, 19)
+
+[node name="NPC" type="CharacterBody2D" unique_id=782177443 groups=["NPC"]]
+script = ExtResource("1_6xvi5")
+npc_id = "npc_1"
+npc_name = "Bobby Joe"
+dialog_resource = SubResource("Resource_w7kh3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=649980438]
+y_sort_enabled = true
+sprite_frames = SubResource("SpriteFrames_0dqb1")
+animation = &"idle"
+frame_progress = 0.47141564
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=643220826]
+position = Vector2(0.5, -1.5)
+shape = SubResource("RectangleShape2D_0dqb1")
+
+[node name="DialogManager" parent="." unique_id=1901297064 instance=ExtResource("4_jnjht")]
