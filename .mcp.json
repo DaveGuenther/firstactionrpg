@@ -1,0 +1,20 @@
+{
+	"mcpServers": {
+		"godot-mcp-toolkit": {
+			"args": [
+				"/c",
+				"npx",
+				"-y",
+				"@npgamedev/godot-mcp-server"
+			],
+			"command": "cmd",
+			"cwd": "C:\\godot_projects\\firstactionrpg",
+			"env": {
+				"GODOT_MCP_CONFIG_VERSION": "1",
+				"GODOT_MCP_PROJECT_PATH": "C:\\godot_projects\\firstactionrpg",
+				"GODOT_MCP_READ_ONLY": "1"
+
+			}
+		}
+	}
+}
