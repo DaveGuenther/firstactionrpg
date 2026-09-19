@@ -24,7 +24,14 @@ var attack_in_progress = false
 
 var can_move = true
 #Dialog & Quest vars
-var selected_quest: Quest = null
+# Backed by global so the selected quest and tracker visibility survive
+# scene changes, which destroy and recreate this player node.
+var selected_quest: Quest:
+	get: return global.selected_quest
+	set(value): global.selected_quest = value
+var quest_tracker_hidden: bool:
+	get: return global.quest_tracker_hidden
+	set(value): global.quest_tracker_hidden = value
 var coin_amount = 0
 
 const speed = 100
@@ -34,7 +41,7 @@ func _ready():
 	get_input()
 	global.player = self
 	$AnimatedSprite2D.play("front_idle")
-	quest_tracker.visible = false
+	update_quest_tracker(selected_quest)
 	update_coins()
 	
 	# Siognal connections
@@ -226,6 +233,16 @@ func interact():
 	if Input.is_action_just_pressed("ui_quest_menu"):
 		quest_manager.show_hide_log()
 
+	# Bring back a manually-closed quest tracker
+	if Input.is_action_just_pressed("quest_tracker_toggle"):
+		quest_tracker_hidden = false
+		update_quest_tracker(selected_quest)
+
+
+func _on_quest_tracker_close_pressed():
+	quest_tracker_hidden = true
+	quest_tracker.visible = false
+
 
 # Check if quest item is needed
 func is_item_needed(item_id: String) -> bool:
@@ -271,7 +288,7 @@ func update_coins():
 func update_quest_tracker(quest: Quest):
 	# If we have an active quest, populate the quest_tracker with quest details
 	if quest:
-		quest_tracker.visible = true
+		quest_tracker.visible = not quest_tracker_hidden
 		title.text = quest.quest_name
 		
 		for child in objectives.get_children():

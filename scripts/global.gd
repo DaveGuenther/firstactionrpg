@@ -9,6 +9,11 @@ var player_current_attack = false
 # stable per-instance key, so they stay gone when a scene is reloaded.
 var collected_items: Dictionary = {}
 
+# Quest HUD state, kept here (not on the player) so it survives the
+# player being destroyed/recreated on scene change.
+var selected_quest: Quest = null
+var quest_tracker_hidden: bool = false
+
 func mark_item_collected(key: String):
 	collected_items[key] = true
 
