@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://m0tean3gc1bx" path="res://scripts/player_new.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://d28r2gy1f1btl" path="res://art/characters/player.png" id="2_qhqgy"]
 [ext_resource type="Texture2D" uid="uid://dpkh2vtvrw2hy" path="res://art/objects/money.tres" id="3_qhqgy"]
-[ext_resource type="PackedScene" uid="uid://lh2ghrkic5vj" path="res://scenes/Quest/quest_manager.tscn" id="4_dqkch"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
 atlas = ExtResource("2_qhqgy")
@@ -517,8 +516,6 @@ uppercase = true
 [node name="Objectives" type="VBoxContainer" parent="HUD/QuestTracker/Details" unique_id=285872433]
 layout_mode = 2
 size_flags_vertical = 3
-
-[node name="QuestManager" parent="." unique_id=1934866547 instance=ExtResource("4_dqkch")]
 
 [connection signal="body_entered" from="player_hitbox" to="." method="_on_player_hitbox_body_entered"]
 [connection signal="body_exited" from="player_hitbox" to="." method="_on_player_hitbox_body_exited"]

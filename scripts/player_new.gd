@@ -6,7 +6,7 @@ extends CharacterBody2D
 @onready var quest_tracker: ColorRect = $HUD/QuestTracker
 @onready var title: Label = $HUD/QuestTracker/Details/Title
 @onready var objectives: VBoxContainer = $HUD/QuestTracker/Details/Objectives
-@onready var quest_manager: Node2D = $QuestManager
+@onready var quest_manager: Node2D = QuestManager
 
 
 const max_speed = 100
@@ -217,6 +217,7 @@ func interact():
 					print("I'm interacting with an item!")
 					if is_item_needed(target.item_id):
 						check_quest_objectives(target.item_id, "collection", target.item_quantity)
+						global.mark_item_collected(target.get_instance_key())
 						target.queue_free()
 					else:
 						print("Item not needed for any active quest")
