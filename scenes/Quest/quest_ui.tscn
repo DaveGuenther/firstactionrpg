@@ -116,6 +116,14 @@ layout_mode = 2
 [node name="QuestRewards" type="VBoxContainer" parent="CanvasLayer/Panel/Contents/Details/QuestDetails" unique_id=998121167]
 layout_mode = 2
 
+[node name="TrackButton" type="Button" parent="CanvasLayer/Panel/Contents/Details/QuestDetails" unique_id=1400000002]
+visible = false
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "Track"
+
 [node name="CloseButton" type="Button" parent="CanvasLayer/Panel" unique_id=661536402]
 layout_mode = 1
 anchors_preset = 1
@@ -130,3 +138,4 @@ theme_override_font_sizes/font_size = 20
 text = "X"
 
 [connection signal="pressed" from="CanvasLayer/Panel/CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/Contents/Details/QuestDetails/TrackButton" to="." method="_on_track_button_pressed"]

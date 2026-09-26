@@ -8,17 +8,35 @@ extends Control
 
 func _ready():
 	hide_dialog()
-	
 
-# show dialog box
-func show_dialog():
+
+# show dialog box with speaker, text and one button per option
+func show_dialog(speaker, text, options):
 	panel.visible = true
-	
+	dialog_speaker.text = speaker
+	dialog_text.text = text
+
+	# Remove old option buttons
+	for child in dialog_options.get_children():
+		dialog_options.remove_child(child)
+		child.queue_free()
+
+	# Populate with new option buttons
+	for option in options.keys():
+		var button = Button.new()
+		button.add_theme_font_size_override("font_size", 20)
+		button.text = option
+		button.pressed.connect(_on_option_selected.bind(option))
+		dialog_options.add_child(button)
+
 # hide dialog box
 func hide_dialog():
 	panel.visible = false
 	global.player.can_move = true
 
+# Pass chosen option to the DialogManager
+func _on_option_selected(option):
+	get_parent().handle_dialog_choice(option)
 
 func _on_close_button_pressed() -> void:
-	pass # Replace with function body.
+	get_parent().hide_dialog()

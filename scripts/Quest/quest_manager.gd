@@ -29,9 +29,11 @@ func update_quest(quest_id: String, state: String):
 	if quest:
 		quest.state = state
 		quest_updated.emit(quest_id)
-		if state == "completed":
-			remove_quest(quest_id)
-			
+
+# All quests the player has accepted, including completed ones
+func get_all_quests() -> Array:
+	return quests.values()
+
 
 func get_active_quests() -> Array:
 	var active_quests = []
@@ -41,10 +43,10 @@ func get_active_quests() -> Array:
 	return active_quests
 			
 			
-func complete_objective(quest_id: String, objective_id: String):
+func complete_objective(quest_id: String, objective_id: String, quantity: int = 1):
 	var quest = get_quest(quest_id)
 	if quest:
-		quest.complete_objective(objective_id)
+		quest.complete_objective(objective_id, quantity)
 		objective_updated.emit(quest_id, objective_id)
 		
 func show_hide_log():

@@ -47,19 +47,27 @@ func handle_dialog_choice(option):
 		npc.set_dialog_state("start")
 		hide_dialog()
 	elif next_state == "give_quests":
-		if npc.dialog_resource.get_npc_dialog(npc.npc_id)[npc.current_branch_index]["branch_id"] == "npc_default":
+		var branch_id = npc.dialog_resource.get_npc_dialog(npc.npc_id)[npc.current_branch_index]["branch_id"]
+		# Default branches are named "<npc>_default" (e.g. npc_1_default)
+		if branch_id.ends_with("_default"):
 			offer_remaining_quests()
 		else:
-			offer_quests(npc.dialog_resource.get_npc_dialog(npc.npc_id)[npc.current_branch_index]["branch_id"])
-			show_dialog(npc)
-		
-	else: 
+			offer_quests(branch_id)
 		show_dialog(npc)
-	
-# AT branch, offer all currently available quests
+
+	else:
+		show_dialog(npc)
+
+# AT branch, offer all quests unlocked at this branch or any earlier one
+# that haven't been accepted yet
 func offer_quests(branch_id: String):
+	var unlocked_ids = []
+	for branch in npc.dialog_resource.get_npc_dialog(npc.npc_id):
+		unlocked_ids.append(branch["branch_id"])
+		if branch["branch_id"] == branch_id:
+			break
 	for quest in npc.quests:
-		if quest.unlock_id == branch_id and quest.state == "not_started":
+		if quest.unlock_id in unlocked_ids and quest.state == "not_started":
 			npc.offer_quest(quest.quest_id)
 			
 # At default branch, offer all previously unaccepted quests

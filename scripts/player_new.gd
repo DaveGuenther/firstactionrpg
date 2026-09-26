@@ -244,32 +244,27 @@ func _on_quest_tracker_close_pressed():
 	quest_tracker.visible = false
 
 
-# Check if quest item is needed
+# Check if quest item is needed by any in-progress quest (tracked or not)
 func is_item_needed(item_id: String) -> bool:
-	if selected_quest != null:
-		for objective in selected_quest.objectives:
+	for quest in quest_manager.get_active_quests():
+		for objective in quest.objectives:
 			if objective.target_id == item_id and objective.target_type == "collection" and not objective.is_completed:
 				return true
 	return false
-	
+
+# Progress matching objectives on every in-progress quest, tracked or not
 func check_quest_objectives(target_id: String, target_type: String, quantity: int=1):
-	if selected_quest == null:
-		return
-	var objective_updated = false
-	for objective in selected_quest.objectives:
-		if objective.target_id == target_id and objective.target_type == target_type and not objective.is_completed:
-			print("Completing objective for quest: ", selected_quest.quest_name)
-			selected_quest.complete_objective(objective.id, quantity)
-			objective_updated = true
-			break
-			
-	# Provide Rewards
-	if objective_updated:
-		if selected_quest.is_completed():
-			handle_quest_completion(selected_quest)
-	
-		# Update UI
-		update_quest_tracker(selected_quest)
+	for quest in quest_manager.get_active_quests():
+		for objective in quest.objectives:
+			if objective.target_id == target_id and objective.target_type == target_type and not objective.is_completed:
+				print("Completing objective for quest: ", quest.quest_name)
+				# Emits objective_updated, which refreshes the tracker and quest log
+				quest_manager.complete_objective(quest.quest_id, objective.id, quantity)
+
+				# Provide Rewards
+				if quest.is_completed():
+					handle_quest_completion(quest)
+				break
 
 # coin reqards
 func handle_quest_completion(quest: Quest):
@@ -277,7 +272,10 @@ func handle_quest_completion(quest: Quest):
 		if reward.reward_type == "coins":
 			coin_amount += reward.reward_amount
 			update_coins()
-	update_quest_tracker(quest)
+	# Stop tracking the finished quest (it stays in the quest log)
+	if quest == selected_quest:
+		selected_quest = null
+		update_quest_tracker(null)
 	quest_manager.update_quest(quest.quest_id, "completed")
 	
 # Update coin UI
