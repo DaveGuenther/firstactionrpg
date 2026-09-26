@@ -5,11 +5,9 @@ var player_chase = false
 var player = null
 
 var health = 100
-var player_in_attack_zone = false
 var can_take_damage = true
 
 func _physics_process(delta: float) -> void:
-	deal_with_damage()
 	
 	if player_chase:
 		var direction = (player.position - position).normalized()
@@ -26,35 +24,31 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 		
+# Only chase the player (not NPCs or other bodies)
 func _on_detection_area_body_entered(body: Node2D) -> void:
-	player = body
-	player_chase=true
+	if body.is_in_group("player"):
+		player = body
+		player_chase = true
 
 
 func _on_detection_area_body_exited(body: Node2D) -> void:
-	player = null
-	player_chase = false
+	if body == player:
+		player = null
+		player_chase = false
 	
 
 
-func _on_enemy_hitbox_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player"):
-		player_in_attack_zone = true
-
-
-func _on_enemy_hitbox_body_exited(body: Node2D) -> void:
-	if body.is_in_group("player"):
-		player_in_attack_zone = false
-		
-func deal_with_damage():
-	if player_in_attack_zone and global.player_current_attack:
-		if can_take_damage:
-			health = health - 20
-			$damage_cooldown.start()
-			can_take_damage=false
-			print("slime health = ", health)
-			if health <=0:
-				self.queue_free()
+# Called by whatever hits this enemy (e.g. the player's attack).
+# damage_cooldown makes it briefly invulnerable after each hit.
+func take_damage(amount: int) -> void:
+	if not can_take_damage:
+		return
+	health -= amount
+	$damage_cooldown.start()
+	can_take_damage = false
+	print("slime health = ", health)
+	if health <= 0:
+		queue_free()
 
 
 func _on_damage_cooldown_timeout() -> void:

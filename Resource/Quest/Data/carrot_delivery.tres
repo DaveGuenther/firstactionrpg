@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="Quest" format=3 uid="uid://c538sa15qo7m4"]
 
-[ext_resource type="Script" uid="uid://s7hexa2j4y7l" path="res://Resource/Quest/Objectives.gd" id="1_y1cyw"]
-[ext_resource type="Script" uid="uid://dapm2cviawxs3" path="res://Resource/Quest/Rewards.gd" id="2_3oxpx"]
-[ext_resource type="Script" uid="uid://cvixge0m00vuy" path="res://Resource/Quest/Quests.gd" id="3_7fvyy"]
+[ext_resource type="Script" uid="uid://s7hexa2j4y7l" path="res://Resource/Quest/objective.gd" id="1_y1cyw"]
+[ext_resource type="Script" uid="uid://dapm2cviawxs3" path="res://Resource/Quest/reward.gd" id="2_3oxpx"]
+[ext_resource type="Script" uid="uid://cvixge0m00vuy" path="res://Resource/Quest/quest.gd" id="3_7fvyy"]
 
 [sub_resource type="Resource" id="Resource_1m2tn"]
 script = ExtResource("1_y1cyw")
@@ -16,6 +16,7 @@ metadata/_custom_type_script = "uid://s7hexa2j4y7l"
 [sub_resource type="Resource" id="Resource_45fuj"]
 script = ExtResource("1_y1cyw")
 id = "obj_talk_bobby_joe"
+description = "Return to Bobby Joe"
 target_id = "npc_1"
 objective_dialog = "\"Thanks!!\""
 metadata/_custom_type_script = "uid://s7hexa2j4y7l"
@@ -31,6 +32,7 @@ quest_id = "npc_1_quest_2"
 quest_name = "Find me a carrot!"
 quest_description = "Find a carrot and give it to Bobby Joe"
 unlock_id = "npc_1_2"
+objectives_in_order = true
 objectives = Array[ExtResource("1_y1cyw")]([SubResource("Resource_1m2tn"), SubResource("Resource_45fuj")])
 rewards = Array[ExtResource("2_3oxpx")]([SubResource("Resource_j5utm")])
 metadata/_custom_type_script = "uid://cvixge0m00vuy"

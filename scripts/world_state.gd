@@ -1,9 +1,7 @@
+# world_state.gd
+# Autoload "WorldState": what has changed in the game world, so levels
+# look the same when the player comes back to them.
 extends Node
-
-var player: Node = null
-
-
-var player_current_attack = false
 
 # Tracks world items (mushrooms, etc.) already picked up, keyed by a
 # stable per-instance key, so they stay gone when a scene is reloaded.

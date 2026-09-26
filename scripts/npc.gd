@@ -8,34 +8,23 @@ extends CharacterBody2D
 func _physics_process(delta: float) -> void:
 	$AnimatedSprite2D.play('idle')
 
-# Dialog vars
-@export var dialog_resource: Dialog
-@onready var dialog_manager: Node2D = $DialogManager
+# Dialog vars (dialog text lives in the DialogManager autoload)
 var current_state = "start"
 var current_branch_index=0
 
-# Quest Vars
+# Quest definitions this NPC can give
 @export var quests: Array[Quest] = []
-var quest_manager: Node=null
 
 
 func _ready():
-	dialog_resource.load_from_json("res://Resource/Dialog/dialog_data.json")
-	# init npc reference
-	dialog_manager.npc = self
-	#Get Quest Manager
-	quest_manager = QuestManager
 	print("NPC Ready.  Quests loaded: ", quests.size())
 
 func start_dialog():
-	var npc_dialogs = dialog_resource.get_npc_dialog(npc_id)
-	if npc_dialogs.is_empty():
-		return
-	dialog_manager.show_dialog(self)
+	DialogManager.start_dialog(self)
 	
 # Get current branch dialog
 func get_current_dialog():
-	var npc_dialogs = dialog_resource.get_npc_dialog(npc_id)
+	var npc_dialogs = DialogManager.get_npc_dialog(npc_id)
 	if current_branch_index<npc_dialogs.size():
 		for dialog in npc_dialogs[current_branch_index]["dialogs"]:
 			if dialog["state"] == current_state:
@@ -56,18 +45,18 @@ func offer_quest(quest_id: String):
 	print("attemping to offer quest:", quest_id)
 	
 	for quest in quests:
-		if quest.quest_id == quest_id and not quest_manager.has_quest(quest_id):
-			quest_manager.accept_quest(quest)
+		if quest.quest_id == quest_id and not QuestManager.has_quest(quest_id):
+			QuestManager.accept_quest(quest)
 			return
 		
 	print ("Quest not found or started already")
 
 # Returns quest_dialog
 func get_quest_dialog() -> Dictionary:
-	var active_quests = quest_manager.get_active_quests()
+	var active_quests = QuestManager.get_active_quests()
 	for quest in active_quests:
 		for objective in quest.objectives:
-			if objective.target_id == npc_id and objective.target_type == Objectives.Type.TALK_TO and not objective.is_completed:
+			if objective.target_id == npc_id and objective.target_type == Objective.Type.TALK_TO and not objective.is_completed and quest.is_objective_active(objective):
 				if current_state == "start":
 					return {"text": objective.objective_dialog, "options": {}}
 	return {"text":"", "options":{}}					

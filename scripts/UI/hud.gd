@@ -58,6 +58,9 @@ func update_quest_tracker():
 
 		if objective.is_completed:
 			label.add_theme_color_override("font_color", Color(0,1,0))
+		elif not quest.is_objective_active(objective):
+			# Locked: an earlier objective in an ordered quest isn't done yet
+			label.add_theme_color_override("font_color", Color(0.6,0.6,0.6))
 		else:
 			label.add_theme_color_override("font_color", Color(1,0,0))
 

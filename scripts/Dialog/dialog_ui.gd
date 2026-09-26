@@ -29,10 +29,9 @@ func show_dialog(speaker, text, options):
 		button.pressed.connect(_on_option_selected.bind(option))
 		dialog_options.add_child(button)
 
-# hide dialog box
+# hide dialog box (DialogManager.hide_dialog also emits dialog_ended)
 func hide_dialog():
 	panel.visible = false
-	global.player.can_move = true
 
 # Pass chosen option to the DialogManager
 func _on_option_selected(option):

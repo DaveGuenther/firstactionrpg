@@ -19,7 +19,7 @@ func _ready():
 
 	# If this exact item was already picked up in a previous visit
 	# to this scene, don't let it respawn.
-	if not Engine.is_editor_hint() and global.is_item_collected(get_instance_key()):
+	if not Engine.is_editor_hint() and WorldState.is_item_collected(get_instance_key()):
 		queue_free()
 
 # Stable per-instance identifier: which scene file + which node in it.

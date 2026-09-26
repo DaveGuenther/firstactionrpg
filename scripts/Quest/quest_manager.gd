@@ -2,7 +2,7 @@
 # Autoload "QuestManager": owns the player's quests, the rules for
 # progressing and completing them, and which quest is tracked in the HUD.
 # Other nodes report what happened (e.g. check_quest_objectives("npc_2",
-# Objectives.Type.TALK_TO)) and listen to the signals below.
+# Objective.Type.TALK_TO)) and listen to the signals below.
 #
 # NPCs hold quest definitions (.tres). Accepting one stores a copy here
 # (Quest.create_instance), and all progress lives on that copy.
@@ -78,20 +78,26 @@ func set_tracked_quest(quest: Quest):
 	tracked_quest_changed.emit(quest)
 
 # Progress matching (non-collection) objectives on every in-progress quest,
-# e.g. check_quest_objectives("npc_2", Objectives.Type.TALK_TO)
-func check_quest_objectives(target_id: String, target_type: Objectives.Type, quantity: int = 1):
+# e.g. check_quest_objectives("npc_2", Objective.Type.TALK_TO)
+func check_quest_objectives(target_id: String, target_type: Objective.Type, quantity: int = 1):
 	for quest in get_active_quests():
 		for objective in quest.objectives:
-			if objective.target_id == target_id and objective.target_type == target_type and not objective.is_completed:
+			if objective.target_id == target_id and objective.target_type == target_type and not objective.is_completed and quest.is_objective_active(objective):
 				print("Completing objective for quest: ", quest.quest_name)
 				complete_objective(quest.quest_id, objective.id, quantity)
 				if quest.is_completed():
 					complete_quest(quest)
+				else:
+					# In ordered quests this may unlock a collection objective
+					# for items the player is already holding
+					update_collection_objectives()
 				break
 
 # Collection objectives mirror the inventory: progress is however many of
 # the item the player is holding, so items picked up before the quest was
 # accepted count too. Runs on every in-progress quest, tracked or not.
+# In ordered quests the count still shows for a locked objective, but it
+# only completes once the objectives before it are done.
 func update_collection_objectives():
 	for quest in get_active_quests():
 		# An earlier quest in this loop may have completed and used up items
@@ -99,12 +105,13 @@ func update_collection_objectives():
 			continue
 		var changed = false
 		for objective in quest.objectives:
-			if objective.target_type != Objectives.Type.COLLECTION:
+			if objective.target_type != Objective.Type.COLLECTION:
 				continue
 			var held = min(Inventory.get_item_count(objective.target_id), objective.required_quantity)
-			if held != objective.collected_quantity:
+			var done = held >= objective.required_quantity and quest.is_objective_active(objective)
+			if held != objective.collected_quantity or done != objective.is_completed:
 				objective.collected_quantity = held
-				objective.is_completed = held >= objective.required_quantity
+				objective.is_completed = done
 				changed = true
 		if changed:
 			objective_updated.emit(quest.quest_id, "")
@@ -117,7 +124,7 @@ func _on_inventory_changed(_item_id: String, _quantity: int):
 # Give rewards, stop tracking, and use up the collected items
 func complete_quest(quest: Quest):
 	for reward in quest.rewards:
-		if reward.reward_type == Rewards.Type.COINS:
+		if reward.reward_type == Reward.Type.COINS:
 			Inventory.add_coins(reward.reward_amount)
 	# Stop tracking the finished quest (it stays in the quest log)
 	if quest == tracked_quest:
@@ -126,7 +133,7 @@ func complete_quest(quest: Quest):
 	# doesn't re-open this quest's collection objectives
 	update_quest(quest.quest_id, Quest.State.COMPLETED)
 	for objective in quest.objectives:
-		if objective.target_type == Objectives.Type.COLLECTION:
+		if objective.target_type == Objective.Type.COLLECTION:
 			Inventory.remove_item(objective.target_id, objective.required_quantity)
 
 func show_hide_log():

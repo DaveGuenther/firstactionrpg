@@ -1,8 +1,8 @@
-# Objectives.gd
+# objective.gd
 
 extends Resource
 
-class_name Objectives
+class_name Objective
 
 enum Type { TALK_TO, COLLECTION }
 

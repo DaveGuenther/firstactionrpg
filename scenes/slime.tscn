@@ -132,9 +132,6 @@ radius = 45.099888
 [sub_resource type="CircleShape2D" id="CircleShape2D_nk1ib"]
 radius = 6.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_0u54d"]
-radius = 11.0
-
 [node name="enemy" type="CharacterBody2D" unique_id=2095232551 groups=["enemies"]]
 position = Vector2(1, 1)
 script = ExtResource("1_p2gj0")
@@ -154,16 +151,9 @@ shape = SubResource("CircleShape2D_0dqb1")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=327656734]
 shape = SubResource("CircleShape2D_nk1ib")
 
-[node name="enemy_hitbox" type="Area2D" parent="." unique_id=1594724391 groups=["enemies", "player"]]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy_hitbox" unique_id=283219980]
-shape = SubResource("CircleShape2D_0u54d")
-
 [node name="damage_cooldown" type="Timer" parent="." unique_id=2054140618]
 wait_time = 0.5
 
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]
-[connection signal="body_entered" from="enemy_hitbox" to="." method="_on_enemy_hitbox_body_entered"]
-[connection signal="body_exited" from="enemy_hitbox" to="." method="_on_enemy_hitbox_body_exited"]
 [connection signal="timeout" from="damage_cooldown" to="." method="_on_damage_cooldown_timeout"]

@@ -1,13 +1,7 @@
 [gd_scene format=3 uid="uid://2fpo1502jo6q"]
 
-[ext_resource type="Script" uid="uid://bfll58npvyhqc" path="res://scripts/NPC.gd" id="1_6xvi5"]
+[ext_resource type="Script" uid="uid://bfll58npvyhqc" path="res://scripts/npc.gd" id="1_6xvi5"]
 [ext_resource type="Texture2D" uid="uid://cmhtqcfqloo52" path="res://art/characters/Skeleton.png" id="1_pbvs3"]
-[ext_resource type="Script" uid="uid://b4txwxpchj0vp" path="res://Resource/Dialog/dialog.gd" id="2_ktgr7"]
-[ext_resource type="PackedScene" uid="uid://dgigalv2t22ay" path="res://scenes/Dialog/dialog_manager.tscn" id="4_jnjht"]
-
-[sub_resource type="Resource" id="Resource_w7kh3"]
-script = ExtResource("2_ktgr7")
-metadata/_custom_type_script = "uid://b4txwxpchj0vp"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_txkty"]
 atlas = ExtResource("1_pbvs3")
@@ -66,7 +60,6 @@ size = Vector2(13, 19)
 script = ExtResource("1_6xvi5")
 npc_id = "npc_1"
 npc_name = "Bobby Joe"
-dialog_resource = SubResource("Resource_w7kh3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=649980438]
 y_sort_enabled = true
@@ -77,5 +70,3 @@ frame_progress = 0.47141564
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=643220826]
 position = Vector2(0.5, -1.5)
 shape = SubResource("RectangleShape2D_0dqb1")
-
-[node name="DialogManager" parent="." unique_id=1901297064 instance=ExtResource("4_jnjht")]

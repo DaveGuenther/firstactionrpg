@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dgigalv2t22ay"]
 
-[ext_resource type="PackedScene" uid="uid://dsq2f5335wwyd" path="res://scenes/Dialog/DialogUI.tscn" id="1_8bqcl"]
+[ext_resource type="PackedScene" uid="uid://dsq2f5335wwyd" path="res://scenes/Dialog/dialog_ui.tscn" id="1_8bqcl"]
 [ext_resource type="Script" uid="uid://dxpw4u3ck6k4p" path="res://scripts/Dialog/dialog_manager.gd" id="1_j2nqr"]
 
 [node name="DialogManager" type="Node2D" unique_id=1901297064]

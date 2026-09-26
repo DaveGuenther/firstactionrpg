@@ -82,6 +82,9 @@ func _on_quest_selected(quest: Quest):
 
 		if objective.is_completed:
 			label.add_theme_color_override("font_color", Color (0,1,0))
+		elif not quest.is_objective_active(objective):
+			# Locked: an earlier objective in an ordered quest isn't done yet
+			label.add_theme_color_override("font_color", Color (0.6,0.6,0.6))
 		else:
 			label.add_theme_color_override("font_color", Color (1,0,0))
 
@@ -96,7 +99,7 @@ func _on_quest_selected(quest: Quest):
 		var label = Label.new()
 		label.add_theme_font_size_override("font_size", 20)
 		label.add_theme_color_override("font_color", Color (0,0.84,0))
-		label.text = "Rewards:" + Rewards.Type.keys()[reward.reward_type].capitalize() + ": " + str(reward.reward_amount)
+		label.text = "Rewards:" + Reward.Type.keys()[reward.reward_type].capitalize() + ": " + str(reward.reward_amount)
 		quest_rewards.add_child(label)
 
 	# Track button: only for in-progress quests that aren't already tracked

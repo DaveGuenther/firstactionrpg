@@ -25,17 +25,20 @@ var current_dir = "none"
 
 func _ready():
 	get_input()
-	global.player = self
 	$AnimatedSprite2D.play("front_idle")
 
 	# Signal connections
 	PlayerStats.died.connect(_on_died)
+	# Freeze movement while a dialog is open
+	DialogManager.dialog_started.connect(func(_npc): can_move = false)
+	DialogManager.dialog_ended.connect(func(_npc): can_move = true)
 
 func _physics_process(delta):
 	if can_move:
 		player_movement(delta)
 		enemy_attack()
 		attack()
+		hit_enemies()
 	interact()
 
 func _on_died():
@@ -161,7 +164,6 @@ func attack():
 	var dir = current_dir
 	
 	if Input.is_action_just_pressed("attack"):
-		global.player_current_attack = true
 		attack_in_progress = true
 		
 		if dir == "right":
@@ -187,8 +189,16 @@ func attack():
 
 func _on_attack_cooldown_timeout() -> void:
 	$attack_cooldown.stop()
-	global.player_current_attack=false
 	attack_in_progress = false
+
+# While an attack is in progress, damage enemies inside the player's hitbox.
+# Each enemy's own cooldown stops it being hit every frame.
+func hit_enemies():
+	if not attack_in_progress:
+		return
+	for body in $player_hitbox.get_overlapping_bodies():
+		if body.is_in_group("enemies") and body.has_method("take_damage"):
+			body.take_damage(20)
 	
 
 func interact():
@@ -198,15 +208,15 @@ func interact():
 			if target != null: # If we are lookinhg at the Item and are close enough
 				if target.is_in_group("NPC"):
 					#print("I'm talking to an NPC!")
-					can_move=false
+					# DialogManager.dialog_started freezes movement
 					target.start_dialog()
-					QuestManager.check_quest_objectives(target.npc_id, Objectives.Type.TALK_TO)
+					QuestManager.check_quest_objectives(target.npc_id, Objective.Type.TALK_TO)
 					
 				if target.is_in_group("Item"):
 					print("Picked up ", target.item_quantity, " ", target.item_id)
 					# QuestManager updates collection objectives from Inventory
 					Inventory.add_item(target.item_id, target.item_quantity)
-					global.mark_item_collected(target.get_instance_key())
+					WorldState.mark_item_collected(target.get_instance_key())
 					target.queue_free()
 	
 	# Open/Close quest log

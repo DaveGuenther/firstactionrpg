@@ -1,8 +1,8 @@
-# Rewards.gd
+# reward.gd
 
 extends Resource
 
-class_name Rewards
+class_name Reward
 
 enum Type { COINS }
 
