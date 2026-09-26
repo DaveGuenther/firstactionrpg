@@ -13,7 +13,6 @@ func _physics_process(delta: float) -> void:
 	
 	if player_chase:
 		var direction = (player.position - position).normalized()
-		#position += dist_to_player/speed
 		velocity = direction*speed
 		if direction.x>=0:
 			$AnimatedSprite2D.flip_h=false

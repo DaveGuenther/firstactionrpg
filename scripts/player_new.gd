@@ -1,6 +1,5 @@
 extends CharacterBody2D
 
-@export var yes=1
 @onready var ray_cast_2d = $RayCast2D
 @onready var amount: Label = $HUD/Coins/Amount
 @onready var quest_tracker: ColorRect = $HUD/QuestTracker
@@ -312,7 +311,6 @@ func update_quest_tracker(quest: Quest):
 		
 		for child in objectives.get_children():
 			child.queue_free()
-			#objectives.remove_child(child)
 			
 		for objective in quest.objectives:
 			var label = Label.new()

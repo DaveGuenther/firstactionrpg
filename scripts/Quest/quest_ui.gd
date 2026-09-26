@@ -1,5 +1,4 @@
 ### Quest_ui.gd
-@tool
 extends Control
 
 @onready var panel = $CanvasLayer/Panel
@@ -16,9 +15,6 @@ var selected_quest: Quest = null
 var quest_manager
 
 func _ready():
-	if Engine.is_editor_hint():
-		hide()
-		return
 	panel.visible = false
 	clear_quest_details()
 

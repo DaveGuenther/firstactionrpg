@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="firstactrionrpg"
+config/name="firstactionrpg"
 run/main_scene="uid://ba0lmteqv1jnh"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://art/icon.svg"

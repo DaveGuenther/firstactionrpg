@@ -19,7 +19,6 @@ func change_scenes():
 	if global.transition_scene == true:
 		if global.current_scene == "west_side":
 			global.finish_change_scene()
-			#get_tree().change_scene_to_file("res://scenes/world.tscn")
 
 
 func _on_world_teleport_body_entered(body: Node2D) -> void:

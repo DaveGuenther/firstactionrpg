@@ -30,7 +30,6 @@ func change_scenes():
 	if global.transition_scene == true:
 		if global.current_scene == "world":
 			global.finish_change_scene()
-			#get_tree().change_scene_to_file("res://scenes/cliff_side.tscn")
 			
 			
 		
