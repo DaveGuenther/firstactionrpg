@@ -14,6 +14,33 @@ var collected_items: Dictionary = {}
 var selected_quest: Quest = null
 var quest_tracker_hidden: bool = false
 
+# Player inventory: item_id -> quantity (e.g. {"item_mushroom": 3}).
+# Lives here so it survives scene changes. Always modify it through the
+# functions below so inventory_changed fires.
+signal inventory_changed(item_id: String, quantity: int)
+var inventory: Dictionary = {}
+
+func add_item(item_id: String, quantity: int = 1):
+	inventory[item_id] = inventory.get(item_id, 0) + quantity
+	inventory_changed.emit(item_id, inventory[item_id])
+
+# Removes up to `quantity` of an item. Returns false (and removes nothing)
+# if there aren't enough.
+func remove_item(item_id: String, quantity: int = 1) -> bool:
+	if get_item_count(item_id) < quantity:
+		return false
+	inventory[item_id] -= quantity
+	if inventory[item_id] == 0:
+		inventory.erase(item_id)
+	inventory_changed.emit(item_id, get_item_count(item_id))
+	return true
+
+func get_item_count(item_id: String) -> int:
+	return inventory.get(item_id, 0)
+
+func has_item(item_id: String, quantity: int = 1) -> bool:
+	return get_item_count(item_id) >= quantity
+
 func mark_item_collected(key: String):
 	collected_items[key] = true
 

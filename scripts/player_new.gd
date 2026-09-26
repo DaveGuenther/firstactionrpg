@@ -47,6 +47,7 @@ func _ready():
 	# Siognal connections
 	quest_manager.quest_updated.connect(_on_quest_updated)
 	quest_manager.objective_updated.connect(_on_objective_updated)
+	global.inventory_changed.connect(_on_inventory_changed)
 
 func _physics_process(delta):
 	if can_move:
@@ -221,13 +222,11 @@ func interact():
 					check_quest_objectives(target.npc_id, "talk_to")
 					
 				if target.is_in_group("Item"):
-					print("I'm interacting with an item!")
-					if is_item_needed(target.item_id):
-						check_quest_objectives(target.item_id, "collection", target.item_quantity)
-						global.mark_item_collected(target.get_instance_key())
-						target.queue_free()
-					else:
-						print("Item not needed for any active quest")
+					print("Picked up ", target.item_quantity, " ", target.item_id)
+					# Collection objectives update via inventory_changed
+					global.add_item(target.item_id, target.item_quantity)
+					global.mark_item_collected(target.get_instance_key())
+					target.queue_free()
 	
 	# Open/Close quest log
 	if Input.is_action_just_pressed("ui_quest_menu"):
@@ -244,15 +243,32 @@ func _on_quest_tracker_close_pressed():
 	quest_tracker.visible = false
 
 
-# Check if quest item is needed by any in-progress quest (tracked or not)
-func is_item_needed(item_id: String) -> bool:
+# Collection objectives mirror the inventory: progress is however many of
+# the item the player is holding, so items picked up before the quest was
+# accepted count too. Runs on every in-progress quest, tracked or not.
+func update_collection_objectives():
 	for quest in quest_manager.get_active_quests():
+		# An earlier quest in this loop may have completed and used up items
+		if quest.state != "in_progress":
+			continue
+		var changed = false
 		for objective in quest.objectives:
-			if objective.target_id == item_id and objective.target_type == "collection" and not objective.is_completed:
-				return true
-	return false
+			if objective.target_type != "collection":
+				continue
+			var held = min(global.get_item_count(objective.target_id), objective.required_quantity)
+			if held != objective.collected_quantity:
+				objective.collected_quantity = held
+				objective.is_completed = held >= objective.required_quantity
+				changed = true
+		if changed:
+			quest_manager.objective_updated.emit(quest.quest_id, "")
+			if quest.is_completed():
+				handle_quest_completion(quest)
 
-# Progress matching objectives on every in-progress quest, tracked or not
+func _on_inventory_changed(_item_id: String, _quantity: int):
+	update_collection_objectives()
+
+# Progress matching (non-collection) objectives on every in-progress quest
 func check_quest_objectives(target_id: String, target_type: String, quantity: int=1):
 	for quest in quest_manager.get_active_quests():
 		for objective in quest.objectives:
@@ -276,7 +292,12 @@ func handle_quest_completion(quest: Quest):
 	if quest == selected_quest:
 		selected_quest = null
 		update_quest_tracker(null)
+	# Mark completed before using up items, so the inventory change
+	# doesn't re-open this quest's collection objectives
 	quest_manager.update_quest(quest.quest_id, "completed")
+	for objective in quest.objectives:
+		if objective.target_type == "collection":
+			global.remove_item(objective.target_id, objective.required_quantity)
 	
 # Update coin UI
 func update_coins():
@@ -311,6 +332,9 @@ func update_quest_tracker(quest: Quest):
 # update tracker if quest is complete
 func _on_quest_updated(quest_id: String):
 	var quest = quest_manager.get_quest(quest_id)
+	# Newly accepted quest: count items already in the inventory
+	if quest and quest.state == "in_progress":
+		update_collection_objectives()
 	if quest == selected_quest:
 		update_quest_tracker(quest)
 	
