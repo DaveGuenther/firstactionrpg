@@ -24,7 +24,7 @@ func _ready():
 	# init npc reference
 	dialog_manager.npc = self
 	#Get Quest Manager
-	quest_manager = global.player.quest_manager
+	quest_manager = QuestManager
 	print("NPC Ready.  Quests loaded: ", quests.size())
 
 func start_dialog():

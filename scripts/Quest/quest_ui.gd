@@ -10,7 +10,7 @@ extends Control
 @onready var track_button: Button = $CanvasLayer/Panel/Contents/Details/QuestDetails/TrackButton
 
 # Quest whose details are shown on the right. Viewing a quest does not
-# track it -- the tracked quest lives in global.selected_quest.
+# track it -- the tracked quest is QuestManager.tracked_quest.
 var selected_quest: Quest = null
 var quest_manager
 
@@ -22,6 +22,7 @@ func _ready():
 	quest_manager = get_parent()
 	quest_manager.quest_updated.connect(_on_quest_updated)
 	quest_manager.objective_updated.connect(_on_objectives_updated)
+	quest_manager.tracked_quest_changed.connect(_on_tracked_quest_changed)
 
 func show_hide_log():
 	panel.visible = !panel.visible
@@ -56,7 +57,7 @@ func update_quest_list():
 		quest_list.add_child(button)
 
 func get_quest_label(quest: Quest) -> String:
-	if quest == global.selected_quest:
+	if quest == quest_manager.tracked_quest:
 		return "(Tracked) " + quest.quest_name
 	if quest.state == "completed":
 		return quest.quest_name + " (Completed)"
@@ -77,10 +78,7 @@ func _on_quest_selected(quest: Quest):
 	for objective in quest.objectives:
 		var label = Label.new()
 		label.add_theme_font_size_override("font_size", 20)
-		if objective.target_type == "collection":
-			label.text = objective.description + "("+str(objective.collected_quantity) + "/" + str(objective.required_quantity) + ")"
-		else:
-			label.text = objective.description
+		label.text = objective.get_display_text()
 
 		if objective.is_completed:
 			label.add_theme_color_override("font_color", Color (0,1,0))
@@ -103,7 +101,7 @@ func _on_quest_selected(quest: Quest):
 
 	# Track button: only for in-progress quests that aren't already tracked
 	track_button.visible = true
-	track_button.disabled = quest == global.selected_quest or quest.state != "in_progress"
+	track_button.disabled = quest == quest_manager.tracked_quest or quest.state != "in_progress"
 
 # Trigger to clear quest details
 func clear_quest_details():
@@ -125,10 +123,10 @@ func clear_quest_details():
 func _on_track_button_pressed():
 	if selected_quest == null:
 		return
-	global.selected_quest = selected_quest
-	global.quest_tracker_hidden = false
-	if global.player:
-		global.player.update_quest_tracker(selected_quest)
+	# The HUD and this log refresh via tracked_quest_changed
+	quest_manager.set_tracked_quest(selected_quest)
+
+func _on_tracked_quest_changed(_quest: Quest):
 	refresh()
 
 # Trigger to update quest list

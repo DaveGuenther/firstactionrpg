@@ -20,3 +20,9 @@ class_name Objectives
 
 # objective state
 @export var is_completed: bool = false
+
+# Text shown in the quest log and HUD tracker, e.g. "Collect 10 mushrooms (4/10)"
+func get_display_text() -> String:
+	if target_type == "collection":
+		return description + " (" + str(collected_quantity) + "/" + str(required_quantity) + ")"
+	return description

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://m0tean3gc1bx" path="res://scripts/player_new.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://d28r2gy1f1btl" path="res://art/characters/player.png" id="2_qhqgy"]
-[ext_resource type="Texture2D" uid="uid://dpkh2vtvrw2hy" path="res://art/objects/money.tres" id="3_qhqgy"]
+[ext_resource type="PackedScene" path="res://scenes/UI/hud.tscn" id="4_hud"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
 atlas = ExtResource("2_qhqgy")
@@ -452,86 +452,9 @@ zoom = Vector2(4, 4)
 target_position = Vector2(0, 25)
 collide_with_areas = true
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=956470869]
-
-[node name="Coins" type="ColorRect" parent="HUD" unique_id=1323288766]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -216.0
-offset_top = 16.0
-offset_right = -16.0
-offset_bottom = 116.0
-grow_horizontal = 0
-color = Color(0.14117648, 0.14117648, 0.14117648, 0.7882353)
-
-[node name="Icon" type="TextureRect" parent="HUD/Coins" unique_id=1835331709]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 16.0
-grow_vertical = 2
-texture = ExtResource("3_qhqgy")
-expand_mode = 2
-
-[node name="Amount" type="Label" parent="HUD/Coins" unique_id=26653598]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = -34.5
-offset_bottom = 34.5
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_font_sizes/font_size = 50
-text = "0"
-
-[node name="QuestTracker" type="ColorRect" parent="HUD" unique_id=2088667433]
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 316.0
-offset_bottom = 216.0
-color = Color(0.14117648, 0.14117648, 0.14117648, 0.7882353)
-
-[node name="Details" type="VBoxContainer" parent="HUD/QuestTracker" unique_id=859314275]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 10
-
-[node name="Title" type="Label" parent="HUD/QuestTracker/Details" unique_id=1961639171]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6862745, 0.80784315, 0.95686275, 1)
-theme_override_font_sizes/font_size = 25
-text = "title"
-horizontal_alignment = 1
-uppercase = true
-
-[node name="Objectives" type="VBoxContainer" parent="HUD/QuestTracker/Details" unique_id=285872433]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="CloseButton" type="Button" parent="HUD/QuestTracker" unique_id=1400000001]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -28.0
-offset_top = 4.0
-offset_right = -4.0
-offset_bottom = 28.0
-grow_horizontal = 0
-theme_override_font_sizes/font_size = 16
-text = "X"
+[node name="HUD" parent="." unique_id=956470869 instance=ExtResource("4_hud")]
 
 [connection signal="body_entered" from="player_hitbox" to="." method="_on_player_hitbox_body_entered"]
 [connection signal="body_exited" from="player_hitbox" to="." method="_on_player_hitbox_body_exited"]
 [connection signal="timeout" from="damage_cooldown" to="." method="_on_damage_cooldown_timeout"]
 [connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
-[connection signal="pressed" from="HUD/QuestTracker/CloseButton" to="." method="_on_quest_tracker_close_pressed"]

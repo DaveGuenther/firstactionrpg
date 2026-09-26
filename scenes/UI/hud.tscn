@@ -1,0 +1,95 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/UI/hud.gd" id="1_hud"]
+[ext_resource type="Texture2D" uid="uid://dpkh2vtvrw2hy" path="res://art/objects/money.tres" id="2_money"]
+
+[node name="HUD" type="CanvasLayer" unique_id=956470869]
+script = ExtResource("1_hud")
+
+[node name="Coins" type="ColorRect" parent="." unique_id=1323288766]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -216.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 116.0
+grow_horizontal = 0
+color = Color(0.14117648, 0.14117648, 0.14117648, 0.7882353)
+
+[node name="Icon" type="TextureRect" parent="Coins" unique_id=1835331709]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 16.0
+grow_vertical = 2
+texture = ExtResource("2_money")
+expand_mode = 2
+
+[node name="Amount" type="Label" parent="Coins" unique_id=26653598]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -34.5
+offset_bottom = 34.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 50
+text = "0"
+
+[node name="QuestTracker" type="ColorRect" parent="." unique_id=2088667433]
+unique_name_in_owner = true
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 316.0
+offset_bottom = 216.0
+color = Color(0.14117648, 0.14117648, 0.14117648, 0.7882353)
+
+[node name="Margin" type="MarginContainer" parent="QuestTracker" unique_id=1400000003]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="Details" type="VBoxContainer" parent="QuestTracker/Margin" unique_id=859314275]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Header" type="HBoxContainer" parent="QuestTracker/Margin/Details" unique_id=1400000004]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="QuestTracker/Margin/Details/Header" unique_id=1961639171]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.6862745, 0.80784315, 0.95686275, 1)
+theme_override_font_sizes/font_size = 25
+text = "title"
+horizontal_alignment = 1
+autowrap_mode = 3
+uppercase = true
+
+[node name="CloseButton" type="Button" parent="QuestTracker/Margin/Details/Header" unique_id=1400000001]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 16
+text = "X"
+
+[node name="Objectives" type="VBoxContainer" parent="QuestTracker/Margin/Details" unique_id=285872433]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="pressed" from="QuestTracker/Margin/Details/Header/CloseButton" to="." method="_on_close_button_pressed"]
