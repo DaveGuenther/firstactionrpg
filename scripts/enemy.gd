@@ -7,6 +7,15 @@ var player = null
 var health = 100
 var can_take_damage = true
 
+func _ready() -> void:
+	# If this exact enemy was killed on a previous visit to this level,
+	# don't let it respawn. Disable it first so it can't chase or hurt the
+	# player during the frame before it's freed.
+	if WorldState.is_enemy_defeated(WorldState.get_node_key(self)):
+		process_mode = Node.PROCESS_MODE_DISABLED
+		hide()
+		queue_free()
+
 func _physics_process(delta: float) -> void:
 	
 	if player_chase:
@@ -48,6 +57,7 @@ func take_damage(amount: int) -> void:
 	can_take_damage = false
 	print("slime health = ", health)
 	if health <= 0:
+		WorldState.mark_enemy_defeated(WorldState.get_node_key(self))
 		queue_free()
 
 
