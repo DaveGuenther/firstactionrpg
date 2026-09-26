@@ -16,7 +16,6 @@ var input = Vector2.ZERO
 
 var enemy_in_attack_range = false
 var enemy_attack_cooldown = true
-var health = 160
 var player_alive = true
 
 var attack_in_progress = false
@@ -31,7 +30,8 @@ var selected_quest: Quest:
 var quest_tracker_hidden: bool:
 	get: return global.quest_tracker_hidden
 	set(value): global.quest_tracker_hidden = value
-var coin_amount = 0
+# Health lives in the PlayerStats autoload and coins/items in the Inventory
+# autoload, so they survive scene changes.
 
 const speed = 100
 var current_dir = "none"
@@ -41,12 +41,14 @@ func _ready():
 	global.player = self
 	$AnimatedSprite2D.play("front_idle")
 	update_quest_tracker(selected_quest)
-	update_coins()
-	
-	# Siognal connections
+	update_coins(Inventory.coins)
+
+	# Signal connections
 	quest_manager.quest_updated.connect(_on_quest_updated)
 	quest_manager.objective_updated.connect(_on_objective_updated)
-	global.inventory_changed.connect(_on_inventory_changed)
+	Inventory.item_changed.connect(_on_inventory_changed)
+	Inventory.coins_changed.connect(update_coins)
+	PlayerStats.died.connect(_on_died)
 
 func _physics_process(delta):
 	if can_move:
@@ -54,12 +56,11 @@ func _physics_process(delta):
 		enemy_attack()
 		attack()
 	interact()
-	
-	if health <=0:
-		player_alive = false
-		health=0
-		print("player has been killed")
-		self.queue_free()
+
+func _on_died():
+	player_alive = false
+	print("player has been killed")
+	queue_free()
 
 
 func get_input():
@@ -158,10 +159,10 @@ func _on_player_hitbox_body_exited(body: Node2D) -> void:
 
 func enemy_attack():
 	if enemy_in_attack_range and enemy_attack_cooldown:
-		health = health-20
+		PlayerStats.take_damage(20)
 		enemy_attack_cooldown=false
 		$damage_cooldown.start()
-		print(health)
+		print(PlayerStats.health)
 	
 
 func set_camera_limits(limits: Dictionary):
@@ -222,8 +223,8 @@ func interact():
 					
 				if target.is_in_group("Item"):
 					print("Picked up ", target.item_quantity, " ", target.item_id)
-					# Collection objectives update via inventory_changed
-					global.add_item(target.item_id, target.item_quantity)
+					# Collection objectives update via Inventory.item_changed
+					Inventory.add_item(target.item_id, target.item_quantity)
 					global.mark_item_collected(target.get_instance_key())
 					target.queue_free()
 	
@@ -254,7 +255,7 @@ func update_collection_objectives():
 		for objective in quest.objectives:
 			if objective.target_type != "collection":
 				continue
-			var held = min(global.get_item_count(objective.target_id), objective.required_quantity)
+			var held = min(Inventory.get_item_count(objective.target_id), objective.required_quantity)
 			if held != objective.collected_quantity:
 				objective.collected_quantity = held
 				objective.is_completed = held >= objective.required_quantity
@@ -281,12 +282,11 @@ func check_quest_objectives(target_id: String, target_type: String, quantity: in
 					handle_quest_completion(quest)
 				break
 
-# coin reqards
+# coin rewards
 func handle_quest_completion(quest: Quest):
 	for reward in quest.rewards:
 		if reward.reward_type == "coins":
-			coin_amount += reward.reward_amount
-			update_coins()
+			Inventory.add_coins(reward.reward_amount)
 	# Stop tracking the finished quest (it stays in the quest log)
 	if quest == selected_quest:
 		selected_quest = null
@@ -296,11 +296,11 @@ func handle_quest_completion(quest: Quest):
 	quest_manager.update_quest(quest.quest_id, "completed")
 	for objective in quest.objectives:
 		if objective.target_type == "collection":
-			global.remove_item(objective.target_id, objective.required_quantity)
+			Inventory.remove_item(objective.target_id, objective.required_quantity)
 	
-# Update coin UI
-func update_coins():
-	amount.text = str(coin_amount)
+# Update coin UI (connected to Inventory.coins_changed)
+func update_coins(coins: int):
+	amount.text = str(coins)
 
 # Update trascker UI
 func update_quest_tracker(quest: Quest):
