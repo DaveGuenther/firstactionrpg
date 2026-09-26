@@ -64,7 +64,7 @@
 					},
 					{
 						"state":"give_quests",
-						"text":"Sure! If I have anything, you can find it in your Quest Log.",
+						"text":"Sure! I could go for a carrot right now.  Check your Quest Log.",
 						"options": {
 							"Go Back":"start",
 							"Say Goodbye":"exit"

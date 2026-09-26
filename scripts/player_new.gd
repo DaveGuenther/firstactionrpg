@@ -200,7 +200,7 @@ func interact():
 					#print("I'm talking to an NPC!")
 					can_move=false
 					target.start_dialog()
-					QuestManager.check_quest_objectives(target.npc_id, "talk_to")
+					QuestManager.check_quest_objectives(target.npc_id, Objectives.Type.TALK_TO)
 					
 				if target.is_in_group("Item"):
 					print("Picked up ", target.item_quantity, " ", target.item_id)

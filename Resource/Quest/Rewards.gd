@@ -3,5 +3,8 @@
 extends Resource
 
 class_name Rewards
-@export var reward_type: String
+
+enum Type { COINS }
+
+@export var reward_type: Type = Type.COINS
 @export var reward_amount: int = 1

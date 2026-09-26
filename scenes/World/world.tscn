@@ -1,7 +1,6 @@
 [gd_scene format=4 uid="uid://ba0lmteqv1jnh"]
 
-[ext_resource type="Script" path="res://scripts/World/level.gd" id="1_vwu0h"]
-[ext_resource type="Script" path="res://scripts/World/teleporter.gd" id="tp_script"]
+[ext_resource type="Script" uid="uid://uo5an1u3jymt" path="res://scripts/World/level.gd" id="1_vwu0h"]
 [ext_resource type="TileSet" uid="uid://bencucximpch0" path="res://art/tilesets/trees_rocks.tres" id="2_dfi2i"]
 [ext_resource type="PackedScene" uid="uid://duflprm3aumwc" path="res://scenes/player.tscn" id="3_6bxf1"]
 [ext_resource type="PackedScene" uid="uid://dsjhc2xfr6bgs" path="res://scenes/slime.tscn" id="4_tggbu"]
@@ -9,8 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://yhycm3mguk3b" path="res://art/objects/carrot_underground.tres" id="6_4lkwb"]
 [ext_resource type="PackedScene" uid="uid://2fpo1502jo6q" path="res://scenes/NPC.tscn" id="7_i6v1b"]
 [ext_resource type="Script" uid="uid://cvixge0m00vuy" path="res://Resource/Quest/Quests.gd" id="8_8x3r3"]
-[ext_resource type="Script" uid="uid://s7hexa2j4y7l" path="res://Resource/Quest/Objectives.gd" id="9_2g54g"]
-[ext_resource type="Script" uid="uid://dapm2cviawxs3" path="res://Resource/Quest/Rewards.gd" id="10_jixe4"]
+[ext_resource type="Resource" uid="uid://c538sa15qo7m4" path="res://Resource/Quest/Data/carrot_delivery.tres" id="9_jixe4"]
+[ext_resource type="Resource" uid="uid://1rvwyt2fwgd4" path="res://Resource/Quest/Data/potion_ingredients.tres" id="11_potion"]
+[ext_resource type="Resource" uid="uid://d3lbhbntufixn" path="res://Resource/Quest/Data/rotten_wood.tres" id="12_wood"]
+[ext_resource type="Script" uid="uid://h3w4vg0kxrp6" path="res://scripts/World/teleporter.gd" id="tp_script"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0dqb1"]
 size = Vector2(47, 30)
@@ -21,69 +22,9 @@ size = Vector2(21, 38)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0u54d"]
 size = Vector2(53, 52)
 
-[sub_resource type="Resource" id="Resource_aqshw"]
-script = ExtResource("9_2g54g")
-id = "npc_talk_01"
-description = "Talk to Buster Chuzzle"
-target_id = "npc_2"
-target_type = "talk_to"
-objective_dialog = "I need mushrooms for my potions.  They should be found growing around trees"
-metadata/_custom_type_script = "uid://s7hexa2j4y7l"
-
-[sub_resource type="Resource" id="Resource_ng6hi"]
-script = ExtResource("9_2g54g")
-id = "obj_collect_01"
-description = "Collect 10 mushrooms"
-target_id = "item_mushroom"
-target_type = "collection"
-required_quantity = 10
-metadata/_custom_type_script = "uid://s7hexa2j4y7l"
-
-[sub_resource type="Resource" id="Resource_8x3r3"]
-script = ExtResource("10_jixe4")
-reward_type = "coins"
-reward_amount = 50
-metadata/_custom_type_script = "uid://dapm2cviawxs3"
-
-[sub_resource type="Resource" id="Resource_qficy"]
-script = ExtResource("8_8x3r3")
-quest_id = "npc_quest_01"
-quest_name = "Potion Ingredients"
-quest_description = "Talk to Buster Chuzzle about the ingredients"
-unlock_id = "npc_1_1"
-objectives = Array[ExtResource("9_2g54g")]([SubResource("Resource_aqshw"), SubResource("Resource_ng6hi")])
-rewards = Array[ExtResource("10_jixe4")]([SubResource("Resource_8x3r3")])
-metadata/_custom_type_script = "uid://cvixge0m00vuy"
-
-[sub_resource type="Resource" id="Resource_7pv12"]
-script = ExtResource("9_2g54g")
-id = "talk_npc_1"
-description = "Talk to Bobby Joe"
-target_id = "npc_1"
-target_type = "talk_to"
-objective_dialog = "No ...  I ate it!"
-metadata/_custom_type_script = "uid://s7hexa2j4y7l"
-
-[sub_resource type="Resource" id="Resource_x6c3r"]
-script = ExtResource("10_jixe4")
-reward_type = "coins"
-reward_amount = 5
-metadata/_custom_type_script = "uid://dapm2cviawxs3"
-
-[sub_resource type="Resource" id="Resource_jnjht"]
-script = ExtResource("8_8x3r3")
-quest_id = "npc_2_quest_1"
-quest_name = "Rotten Wood"
-quest_description = "Ask Bobby Joe if he sold the wood"
-unlock_id = "npc_default"
-objectives = Array[ExtResource("9_2g54g")]([SubResource("Resource_7pv12")])
-rewards = Array[ExtResource("10_jixe4")]([SubResource("Resource_x6c3r")])
-metadata/_custom_type_script = "uid://cvixge0m00vuy"
-
 [node name="world" type="Node2D" unique_id=691247662]
 y_sort_enabled = true
 script = ExtResource("1_vwu0h")
-default_spawn = "Start"
 camera_limit_left = 0
 camera_limit_top = 0
 camera_limit_right = 464
@@ -148,13 +89,13 @@ shape = SubResource("RectangleShape2D_0u54d")
 
 [node name="NPC" parent="." unique_id=782177443 instance=ExtResource("7_i6v1b")]
 position = Vector2(130, 116)
-quests = Array[ExtResource("8_8x3r3")]([SubResource("Resource_qficy")])
+quests = Array[ExtResource("8_8x3r3")]([ExtResource("11_potion"), ExtResource("9_jixe4")])
 
 [node name="NPC2" parent="." unique_id=706358780 instance=ExtResource("7_i6v1b")]
 position = Vector2(377, 72)
 npc_id = "npc_2"
 npc_name = "Buster Chuzzle"
-quests = Array[ExtResource("8_8x3r3")]([SubResource("Resource_jnjht")])
+quests = Array[ExtResource("8_8x3r3")]([ExtResource("12_wood")])
 
 [node name="Carrot" parent="." unique_id=2118020501 instance=ExtResource("5_xtwaw")]
 position = Vector2(192, 109)

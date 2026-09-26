@@ -67,13 +67,13 @@ func offer_quests(branch_id: String):
 		if branch["branch_id"] == branch_id:
 			break
 	for quest in npc.quests:
-		if quest.unlock_id in unlocked_ids and quest.state == "not_started":
+		if quest.unlock_id in unlocked_ids and not QuestManager.has_quest(quest.quest_id):
 			npc.offer_quest(quest.quest_id)
 			
 # At default branch, offer all previously unaccepted quests
 func offer_remaining_quests():
 	for quest in npc.quests:
-		if quest.state == "not_started":
+		if not QuestManager.has_quest(quest.quest_id):
 			npc.offer_quest(quest.quest_id)
 
 	

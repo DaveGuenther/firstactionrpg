@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="Quest" format=3 uid="uid://1rvwyt2fwgd4"]
+
+[ext_resource type="Script" uid="uid://cvixge0m00vuy" path="res://Resource/Quest/Quests.gd" id="1_quest"]
+[ext_resource type="Script" uid="uid://s7hexa2j4y7l" path="res://Resource/Quest/Objectives.gd" id="2_obj"]
+[ext_resource type="Script" uid="uid://dapm2cviawxs3" path="res://Resource/Quest/Rewards.gd" id="3_rew"]
+
+[sub_resource type="Resource" id="Resource_aqshw"]
+script = ExtResource("2_obj")
+id = "npc_talk_01"
+description = "Talk to Buster Chuzzle"
+target_id = "npc_2"
+objective_dialog = "I need mushrooms for my potions.  They should be found growing around trees"
+metadata/_custom_type_script = "uid://s7hexa2j4y7l"
+
+[sub_resource type="Resource" id="Resource_ng6hi"]
+script = ExtResource("2_obj")
+id = "obj_collect_01"
+description = "Collect 10 mushrooms"
+target_id = "item_mushroom"
+target_type = 1
+required_quantity = 10
+metadata/_custom_type_script = "uid://s7hexa2j4y7l"
+
+[sub_resource type="Resource" id="Resource_8x3r3"]
+script = ExtResource("3_rew")
+reward_amount = 50
+metadata/_custom_type_script = "uid://dapm2cviawxs3"
+
+[resource]
+script = ExtResource("1_quest")
+quest_id = "npc_quest_01"
+quest_name = "Potion Ingredients"
+quest_description = "Talk to Buster Chuzzle about the ingredients"
+unlock_id = "npc_1_1"
+objectives = Array[ExtResource("2_obj")]([SubResource("Resource_aqshw"), SubResource("Resource_ng6hi")])
+rewards = Array[ExtResource("3_rew")]([SubResource("Resource_8x3r3")])
+metadata/_custom_type_script = "uid://cvixge0m00vuy"

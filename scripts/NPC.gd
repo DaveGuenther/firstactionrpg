@@ -56,9 +56,8 @@ func offer_quest(quest_id: String):
 	print("attemping to offer quest:", quest_id)
 	
 	for quest in quests:
-		if quest.quest_id == quest_id and quest.state == "not_started":
-			quest.state = "in_progress"
-			quest_manager.add_quest(quest)
+		if quest.quest_id == quest_id and not quest_manager.has_quest(quest_id):
+			quest_manager.accept_quest(quest)
 			return
 		
 	print ("Quest not found or started already")
@@ -68,7 +67,7 @@ func get_quest_dialog() -> Dictionary:
 	var active_quests = quest_manager.get_active_quests()
 	for quest in active_quests:
 		for objective in quest.objectives:
-			if objective.target_id == npc_id and objective.target_type == "talk_to" and not objective.is_completed:
+			if objective.target_id == npc_id and objective.target_type == Objectives.Type.TALK_TO and not objective.is_completed:
 				if current_state == "start":
 					return {"text": objective.objective_dialog, "options": {}}
 	return {"text":"", "options":{}}					

@@ -59,7 +59,7 @@ func update_quest_list():
 func get_quest_label(quest: Quest) -> String:
 	if quest == quest_manager.tracked_quest:
 		return "(Tracked) " + quest.quest_name
-	if quest.state == "completed":
+	if quest.state == Quest.State.COMPLETED:
 		return quest.quest_name + " (Completed)"
 	return quest.quest_name
 
@@ -96,12 +96,12 @@ func _on_quest_selected(quest: Quest):
 		var label = Label.new()
 		label.add_theme_font_size_override("font_size", 20)
 		label.add_theme_color_override("font_color", Color (0,0.84,0))
-		label.text = "Rewards:" + reward.reward_type.capitalize() + ": " + str(reward.reward_amount)
+		label.text = "Rewards:" + Rewards.Type.keys()[reward.reward_type].capitalize() + ": " + str(reward.reward_amount)
 		quest_rewards.add_child(label)
 
 	# Track button: only for in-progress quests that aren't already tracked
 	track_button.visible = true
-	track_button.disabled = quest == quest_manager.tracked_quest or quest.state != "in_progress"
+	track_button.disabled = quest == quest_manager.tracked_quest or quest.state != Quest.State.IN_PROGRESS
 
 # Trigger to clear quest details
 func clear_quest_details():
