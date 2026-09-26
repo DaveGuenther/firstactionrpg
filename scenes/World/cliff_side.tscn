@@ -1,7 +1,8 @@
 [gd_scene format=4 uid="uid://fiutrg4ldthu"]
 
 [ext_resource type="Texture2D" uid="uid://bnep7klgulfq5" path="res://art/tilesets/plains.png" id="1_3gcux"]
-[ext_resource type="Script" uid="uid://b2jjwxti03pc3" path="res://scripts/World/cliff_side.gd" id="1_ocn37"]
+[ext_resource type="Script" path="res://scripts/World/level.gd" id="1_ocn37"]
+[ext_resource type="Script" path="res://scripts/World/teleporter.gd" id="tp_script"]
 [ext_resource type="Texture2D" uid="uid://c05c4gd4f58s6" path="res://art/tilesets/grass.png" id="2_e10jm"]
 [ext_resource type="Texture2D" uid="uid://dgsxw82sustai" path="res://art/objects/objects.png" id="3_jcley"]
 [ext_resource type="TileSet" uid="uid://bencucximpch0" path="res://art/tilesets/trees_rocks.tres" id="4_v3mbj"]
@@ -337,6 +338,11 @@ size = Vector2(52, 27)
 [node name="cliff_side" type="Node2D" unique_id=550334537]
 y_sort_enabled = true
 script = ExtResource("1_ocn37")
+default_spawn = ""
+camera_limit_left = 0
+camera_limit_top = 0
+camera_limit_right = 351
+camera_limit_bottom = 192
 
 [node name="ground" type="TileMapLayer" parent="." unique_id=243777231]
 z_index = -2
@@ -364,6 +370,9 @@ polygon = PackedVector2Array(94, 77, 242, 76, 242, 163, 199, 165, 195, 174, 194,
 position = Vector2(169, 184)
 
 [node name="teleport_world" type="Area2D" parent="." unique_id=921839351]
+script = ExtResource("tp_script")
+target_scene = "res://scenes/World/world.tscn"
+target_spawn = "FromCliffSide"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="teleport_world" unique_id=2112839221]
 position = Vector2(167, 217.5)
@@ -373,5 +382,7 @@ shape = SubResource("RectangleShape2D_0dqb1")
 position = Vector2(229, 115)
 item_id = "item_mushroom"
 
-[connection signal="body_entered" from="teleport_world" to="." method="_on_teleport_world_body_entered"]
-[connection signal="body_exited" from="teleport_world" to="." method="_on_teleport_world_body_exited"]
+[node name="Spawns" type="Node2D" parent="." unique_id=625901256]
+
+[node name="FromWorld" type="Marker2D" parent="Spawns" unique_id=579341423]
+position = Vector2(169, 184)

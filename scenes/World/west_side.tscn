@@ -1,7 +1,8 @@
 [gd_scene format=4 uid="uid://3qndkg7onikw"]
 
 [ext_resource type="TileSet" uid="uid://bencucximpch0" path="res://art/tilesets/trees_rocks.tres" id="1_eli81"]
-[ext_resource type="Script" uid="uid://d0344aecvnawg" path="res://scripts/World/west_side.gd" id="1_fdcyd"]
+[ext_resource type="Script" path="res://scripts/World/level.gd" id="1_fdcyd"]
+[ext_resource type="Script" path="res://scripts/World/teleporter.gd" id="tp_script"]
 [ext_resource type="PackedScene" uid="uid://duflprm3aumwc" path="res://scenes/player.tscn" id="2_fdcyd"]
 [ext_resource type="PackedScene" uid="uid://dlkl6lj1od15y" path="res://scenes/quest_item.tscn" id="4_tuqmg"]
 
@@ -11,6 +12,11 @@ size = Vector2(44, 66)
 [node name="west_side" type="Node2D" unique_id=1602316653]
 y_sort_enabled = true
 script = ExtResource("1_fdcyd")
+default_spawn = ""
+camera_limit_left = 0
+camera_limit_top = 0
+camera_limit_right = 400
+camera_limit_bottom = 320
 
 [node name="ground" type="TileMapLayer" parent="." unique_id=1720224204]
 z_index = -2
@@ -30,6 +36,9 @@ tile_map_data = PackedByteArray("AAAOAAQAAgAAAAUAAAASAAIAAgAAAAUAAAAXAAgAAgAAAAU
 tile_set = ExtResource("1_eli81")
 
 [node name="world_teleport" type="Area2D" parent="." unique_id=886777985]
+script = ExtResource("tp_script")
+target_scene = "res://scenes/World/world.tscn"
+target_spawn = "FromWestSide"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="world_teleport" unique_id=1775929668]
 position = Vector2(434, 248)
@@ -69,5 +78,7 @@ item_id = "item_mushroom"
 position = Vector2(214, 105)
 item_id = "item_mushroom"
 
-[connection signal="body_entered" from="world_teleport" to="." method="_on_world_teleport_body_entered"]
-[connection signal="body_exited" from="world_teleport" to="." method="_on_world_teleport_body_exited"]
+[node name="Spawns" type="Node2D" parent="." unique_id=399655412]
+
+[node name="FromWorld" type="Marker2D" parent="Spawns" unique_id=1681559892]
+position = Vector2(378, 250)

@@ -21,6 +21,7 @@ global="*uid://2awsf3vgwk5t"
 MCPRuntimeServer="*res://addons/godot_mcp_toolkit/runtime/mcp_runtime_server.gd"
 Inventory="*res://scripts/inventory.gd"
 PlayerStats="*res://scripts/player_stats.gd"
+SceneManager="*res://scripts/scene_manager.gd"
 QuestManager="*res://scenes/Quest/quest_manager.tscn"
 
 [display]

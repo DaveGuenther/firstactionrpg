@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://ba0lmteqv1jnh"]
 
-[ext_resource type="Script" uid="uid://bi7vycafo8j3a" path="res://scripts/World/world.gd" id="1_vwu0h"]
+[ext_resource type="Script" path="res://scripts/World/level.gd" id="1_vwu0h"]
+[ext_resource type="Script" path="res://scripts/World/teleporter.gd" id="tp_script"]
 [ext_resource type="TileSet" uid="uid://bencucximpch0" path="res://art/tilesets/trees_rocks.tres" id="2_dfi2i"]
 [ext_resource type="PackedScene" uid="uid://duflprm3aumwc" path="res://scenes/player.tscn" id="3_6bxf1"]
 [ext_resource type="PackedScene" uid="uid://dsjhc2xfr6bgs" path="res://scenes/slime.tscn" id="4_tggbu"]
@@ -82,6 +83,11 @@ metadata/_custom_type_script = "uid://cvixge0m00vuy"
 [node name="world" type="Node2D" unique_id=691247662]
 y_sort_enabled = true
 script = ExtResource("1_vwu0h")
+default_spawn = "Start"
+camera_limit_left = 0
+camera_limit_top = 0
+camera_limit_right = 464
+camera_limit_bottom = 288
 
 [node name="ground" type="TileMapLayer" parent="." unique_id=1375929354]
 z_index = -2
@@ -114,18 +120,27 @@ position = Vector2(0, 1)
 polygon = PackedVector2Array(3, -1, 66, -1, 66, 23, 70, 30, 99, 30, 99, 41, 103, 47, 167, 47, 174, 43, 175, 30, 191, 27, 192, -1, 191, -42, 241, -42, 242, 44, 302, 46, 304, 31, 323, 30, 324, 46, 385, 46, 388, 63, 417, 63, 419, 76, 464, 77, 464, 194.86589, 529, 195, 530, 252, 464, 253, 464, 288, 0, 288, 0, 59, -32, 59, -32, 19, 0, 19, 0, -9, 3, -9, 2, -12, -5, -12, -5, 16, -36, 15, -36, 64, -5, 64, -6, 298, 483, 298, 483, 256, 536, 256, 536, 191, 483, 191, 482, -24, 250, -21, 249, -63, 178, -60, 182, -13, 6, -11, 5, -7, 1, -7, 1, -1)
 
 [node name="cliff_side_teleport" type="Area2D" parent="." unique_id=2002520148]
+script = ExtResource("tp_script")
+target_scene = "res://scenes/World/cliff_side.tscn"
+target_spawn = "FromWorld"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="cliff_side_teleport" unique_id=1014414875]
 position = Vector2(216.5, -25)
 shape = SubResource("RectangleShape2D_0dqb1")
 
 [node name="west_area_teleport" type="Area2D" parent="." unique_id=691750578]
+script = ExtResource("tp_script")
+target_scene = "res://scenes/World/west_side.tscn"
+target_spawn = "FromWorld"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="west_area_teleport" unique_id=1417882532]
 position = Vector2(-19.5, 40)
 shape = SubResource("RectangleShape2D_nk1ib")
 
 [node name="east_area_teleport" type="Area2D" parent="." unique_id=260014049]
+script = ExtResource("tp_script")
+target_scene = "res://scenes/World/east_side.tscn"
+target_spawn = "FromWorld"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="east_area_teleport" unique_id=195607181]
 position = Vector2(498.5, 224)
@@ -166,9 +181,16 @@ item_id = "item_mushroom"
 position = Vector2(346, 273)
 item_id = "item_mushroom"
 
-[connection signal="body_entered" from="cliff_side_teleport" to="." method="_on_cliff_side_teleport_body_entered"]
-[connection signal="body_exited" from="cliff_side_teleport" to="." method="_on_cliff_side_teleport_body_exited"]
-[connection signal="body_entered" from="west_area_teleport" to="." method="_on_west_area_teleport_body_entered"]
-[connection signal="body_exited" from="west_area_teleport" to="." method="_on_west_area_teleport_body_exited"]
-[connection signal="body_entered" from="east_area_teleport" to="." method="_on_east_area_teleport_body_entered"]
-[connection signal="body_exited" from="east_area_teleport" to="." method="_on_east_area_teleport_body_exited"]
+[node name="Spawns" type="Node2D" parent="." unique_id=1473158606]
+
+[node name="Start" type="Marker2D" parent="Spawns" unique_id=339081663]
+position = Vector2(64, 71)
+
+[node name="FromCliffSide" type="Marker2D" parent="Spawns" unique_id=153710184]
+position = Vector2(217, 20)
+
+[node name="FromWestSide" type="Marker2D" parent="Spawns" unique_id=1692467581]
+position = Vector2(11, 42)
+
+[node name="FromEastSide" type="Marker2D" parent="Spawns" unique_id=690620971]
+position = Vector2(453, 227)

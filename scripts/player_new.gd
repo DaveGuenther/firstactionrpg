@@ -146,11 +146,11 @@ func enemy_attack():
 		print(PlayerStats.health)
 	
 
-func set_camera_limits(limits: Dictionary):
-	$MainCamera.limit_left = limits["left"]
-	$MainCamera.limit_top = limits["top"]
-	$MainCamera.limit_right = limits["right"]
-	$MainCamera.limit_bottom = limits["bottom"]	
+func set_camera_limits(left: int, top: int, right: int, bottom: int):
+	$MainCamera.limit_left = left
+	$MainCamera.limit_top = top
+	$MainCamera.limit_right = right
+	$MainCamera.limit_bottom = bottom
 
 
 func _on_damage_cooldown_timeout() -> void:
