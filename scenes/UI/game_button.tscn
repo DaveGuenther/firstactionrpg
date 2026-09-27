@@ -5,35 +5,35 @@
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0dqb1"]
 texture = ExtResource("2_bq1d8")
-texture_margin_left = 22.0
-texture_margin_top = 22.0
-texture_margin_right = 22.0
-texture_margin_bottom = 22.0
-region_rect = Rect2(0, 0, 48, 48)
+texture_margin_left = 24.0
+texture_margin_top = 24.0
+texture_margin_right = 28.0
+texture_margin_bottom = 28.0
+region_rect = Rect2(0, 0, 52, 52)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0u54d"]
 texture = ExtResource("2_bq1d8")
-texture_margin_left = 22.0
-texture_margin_top = 22.0
-texture_margin_right = 22.0
-texture_margin_bottom = 22.0
-region_rect = Rect2(96, 0, 48, 48)
+texture_margin_left = 28.0
+texture_margin_top = 28.0
+texture_margin_right = 24.0
+texture_margin_bottom = 24.0
+region_rect = Rect2(104, 0, 52, 52)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gc51k"]
 texture = ExtResource("2_bq1d8")
-texture_margin_left = 22.0
-texture_margin_top = 22.0
-texture_margin_right = 22.0
-texture_margin_bottom = 22.0
-region_rect = Rect2(96, 0, 48, 48)
+texture_margin_left = 28.0
+texture_margin_top = 28.0
+texture_margin_right = 24.0
+texture_margin_bottom = 24.0
+region_rect = Rect2(104, 0, 52, 52)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nk1ib"]
 texture = ExtResource("2_bq1d8")
-texture_margin_left = 22.0
-texture_margin_top = 22.0
-texture_margin_right = 22.0
-texture_margin_bottom = 22.0
-region_rect = Rect2(48, 0, 48, 48)
+texture_margin_left = 24.0
+texture_margin_top = 24.0
+texture_margin_right = 28.0
+texture_margin_bottom = 28.0
+region_rect = Rect2(52, 0, 52, 52)
 
 [node name="GameButton" type="Button" unique_id=1791837263]
 offset_right = 8.0
