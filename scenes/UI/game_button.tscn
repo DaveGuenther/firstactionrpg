@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://bsuyk7g3i5gf2"]
+
+[ext_resource type="FontFile" uid="uid://cjf27r6t2lkmu" path="res://third_party/YosterIslandRegular-VqMe.ttf" id="1_2w8b1"]
+[ext_resource type="Texture2D" uid="uid://dkrbou5llocqv" path="res://art/UI/GameButtons4x.png" id="2_bq1d8"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0dqb1"]
+texture = ExtResource("2_bq1d8")
+texture_margin_left = 22.0
+texture_margin_top = 22.0
+texture_margin_right = 22.0
+texture_margin_bottom = 22.0
+region_rect = Rect2(0, 0, 48, 48)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0u54d"]
+texture = ExtResource("2_bq1d8")
+texture_margin_left = 22.0
+texture_margin_top = 22.0
+texture_margin_right = 22.0
+texture_margin_bottom = 22.0
+region_rect = Rect2(96, 0, 48, 48)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gc51k"]
+texture = ExtResource("2_bq1d8")
+texture_margin_left = 22.0
+texture_margin_top = 22.0
+texture_margin_right = 22.0
+texture_margin_bottom = 22.0
+region_rect = Rect2(96, 0, 48, 48)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nk1ib"]
+texture = ExtResource("2_bq1d8")
+texture_margin_left = 22.0
+texture_margin_top = 22.0
+texture_margin_right = 22.0
+texture_margin_bottom = 22.0
+region_rect = Rect2(48, 0, 48, 48)
+
+[node name="GameButton" type="Button" unique_id=1791837263]
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_colors/font_color = Color(0.96862745, 0.8392157, 0.5647059, 1)
+theme_override_colors/font_focus_color = Color(0.21960784, 0.16470589, 0.03137255, 1)
+theme_override_colors/font_pressed_color = Color(0.99215686, 0.9529412, 0.87058824, 1)
+theme_override_colors/font_hover_color = Color(0.99215686, 0.9529412, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("1_2w8b1")
+theme_override_styles/normal = SubResource("StyleBoxTexture_0dqb1")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_0u54d")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxTexture_gc51k")
+theme_override_styles/hover = SubResource("StyleBoxTexture_nk1ib")

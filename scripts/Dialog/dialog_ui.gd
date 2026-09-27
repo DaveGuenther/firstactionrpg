@@ -1,6 +1,8 @@
 ### DialogUI.gd
 extends Control
 
+const GAME_BUTTON = preload("res://scenes/UI/game_button.tscn")
+
 @onready var panel = $CanvasLayer/Panel
 @onready var dialog_speaker = $CanvasLayer/Panel/DialogBox/DialogSpeaker
 @onready var dialog_text = $CanvasLayer/Panel/DialogBox/DialogText
@@ -23,7 +25,7 @@ func show_dialog(speaker, text, options):
 
 	# Populate with new option buttons
 	for option in options.keys():
-		var button = Button.new()
+		var button = GAME_BUTTON.instantiate()
 		button.add_theme_font_size_override("font_size", 20)
 		button.text = option
 		button.pressed.connect(_on_option_selected.bind(option))

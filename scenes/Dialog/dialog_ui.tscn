@@ -1,21 +1,9 @@
 [gd_scene format=3 uid="uid://dsq2f5335wwyd"]
 
 [ext_resource type="Script" uid="uid://8gvjfgodb3a4" path="res://scripts/Dialog/dialog_ui.gd" id="1_k7txu"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0dqb1"]
-bg_color = Color(2.8878452e-07, 0.44036144, 0.1734688, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.23854917, 0.9809548, 0.5262945, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="SystemFont" id="SystemFont_nk1ib"]
-subpixel_positioning = 0
+[ext_resource type="Texture2D" uid="uid://dh3dqp3asharc" path="res://art/UI/DialogBox_4x.png" id="2_m6ffy"]
+[ext_resource type="FontFile" uid="uid://cjf27r6t2lkmu" path="res://third_party/YosterIslandRegular-VqMe.ttf" id="3_tcvs6"]
+[ext_resource type="PackedScene" uid="uid://bsowj8ovow6bf" path="res://scenes/UI/game_button_square.tscn" id="4_tcvs6"]
 
 [node name="DialogUI" type="Control" unique_id=366203794]
 layout_mode = 3
@@ -32,7 +20,7 @@ script = ExtResource("1_k7txu")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1893157911]
 
-[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=831715251]
+[node name="Panel" type="NinePatchRect" parent="CanvasLayer" unique_id=773290578]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -43,7 +31,13 @@ offset_right = -10.0
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_0dqb1")
+texture = ExtResource("2_m6ffy")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
 
 [node name="DialogBox" type="VBoxContainer" parent="CanvasLayer/Panel" unique_id=1901092123]
 layout_mode = 1
@@ -60,14 +54,16 @@ theme_override_constants/separation = 15
 
 [node name="DialogSpeaker" type="Label" parent="CanvasLayer/Panel/DialogBox" unique_id=1558948604]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5576705, 0.842635, 0.6678144, 1)
-theme_override_fonts/font = SubResource("SystemFont_nk1ib")
-theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.21960784, 0.16470589, 0.03137255, 1)
+theme_override_fonts/font = ExtResource("3_tcvs6")
+theme_override_font_sizes/font_size = 30
 text = "NPC Name"
 
 [node name="DialogText" type="Label" parent="CanvasLayer/Panel/DialogBox" unique_id=1649139577]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+theme_override_fonts/font = ExtResource("3_tcvs6")
 theme_override_font_sizes/font_size = 23
 text = "Dialog text..."
 horizontal_alignment = 1
@@ -78,17 +74,17 @@ layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="CloseButton" type="Button" parent="CanvasLayer/Panel" unique_id=143917180]
+[node name="CloseButton" parent="CanvasLayer/Panel" unique_id=1671677178 instance=ExtResource("4_tcvs6")]
 layout_mode = 1
-anchors_preset = 1
+anchors_preset = -1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -41.0
-offset_top = 5.0
-offset_right = -5.0
-offset_bottom = 41.0
+offset_left = -44.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = 44.0
 grow_horizontal = 0
-theme_override_font_sizes/font_size = 20
+offset_transform_enabled = true
 text = "X"
 
 [connection signal="pressed" from="CanvasLayer/Panel/CloseButton" to="." method="_on_close_button_pressed"]
