@@ -8,7 +8,7 @@ extends CanvasLayer
 static var tracker_hidden: bool = false
 
 @onready var coins_label: Label = %Amount
-@onready var quest_tracker: ColorRect = %QuestTracker
+@onready var quest_tracker: NinePatchRect = %QuestTracker
 @onready var title: Label = %Title
 @onready var objectives: VBoxContainer = %Objectives
 
