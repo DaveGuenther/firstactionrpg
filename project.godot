@@ -28,7 +28,7 @@ DialogManager="*res://scenes/Dialog/dialog_manager.tscn"
 [display]
 
 window/size/viewport_width=1280
-window/size/viewport_height=720
+window/size/viewport_height=800
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
