@@ -6,7 +6,7 @@
 				"dialogs":[
 					{
 						"state":"start",
-						"text": "Hello, adventurer! do you need?",
+						"text": "Hello, adventurer! What do you need?",
 						"options": {
 							"Ask About Town": "in_progress",
 							"Receive Quests": "give_quests",
