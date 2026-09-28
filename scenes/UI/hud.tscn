@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dpkh2vtvrw2hy" path="res://art/objects/money.tres" id="2_money"]
 [ext_resource type="Texture2D" uid="uid://dh3dqp3asharc" path="res://art/UI/DialogBox_4x.png" id="3_y5tme"]
 [ext_resource type="FontFile" uid="uid://cjf27r6t2lkmu" path="res://third_party/YosterIslandRegular-VqMe.ttf" id="4_18exe"]
+[ext_resource type="PackedScene" uid="uid://bsowj8ovow6bf" path="res://scenes/UI/game_button_square.tscn" id="5_0jeyp"]
 
 [node name="HUD" type="CanvasLayer" unique_id=956470869]
 script = ExtResource("1_hud")
@@ -46,9 +47,10 @@ text = "0"
 
 [node name="QuestTracker" type="NinePatchRect" parent="." unique_id=109225936]
 unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.78431374)
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 316.0
+offset_right = 416.0
 offset_bottom = 216.0
 texture = ExtResource("3_y5tme")
 patch_margin_left = 8
@@ -89,16 +91,21 @@ horizontal_alignment = 1
 autowrap_mode = 3
 uppercase = true
 
-[node name="CloseButton" type="Button" parent="QuestTracker/Margin/Details/Header" unique_id=1400000001]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 16
-text = "X"
-
 [node name="Objectives" type="VBoxContainer" parent="QuestTracker/Margin/Details" unique_id=285872433]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[connection signal="pressed" from="QuestTracker/Margin/Details/Header/CloseButton" to="." method="_on_close_button_pressed"]
+[node name="CloseButton" parent="QuestTracker" unique_id=1671677178 instance=ExtResource("5_0jeyp")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -42.0
+offset_top = 12.0
+offset_right = -8.0
+offset_bottom = 42.0
+grow_horizontal = 0
+text = "X"
+
+[connection signal="pressed" from="QuestTracker/CloseButton" to="." method="_on_close_button_pressed"]

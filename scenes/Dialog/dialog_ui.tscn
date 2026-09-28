@@ -21,6 +21,7 @@ script = ExtResource("1_k7txu")
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1893157911]
 
 [node name="Panel" type="NinePatchRect" parent="CanvasLayer" unique_id=773290578]
+modulate = Color(1, 1, 1, 0.88235295)
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0

@@ -3,7 +3,7 @@
 # Inventory and QuestManager autoloads, so it doesn't depend on the player.
 extends CanvasLayer
 
-# Whether the player closed the quest tracker with its X button. Static so
+# Whether the player closed the quest tracker (X button or Tab). Static so
 # it survives scene changes, which recreate the HUD along with the player.
 static var tracker_hidden: bool = false
 
@@ -21,9 +21,10 @@ func _ready():
 	update_quest_tracker()
 
 func _process(_delta):
-	# Bring back a manually-closed quest tracker
-	if Input.is_action_just_pressed("quest_tracker_toggle"):
-		tracker_hidden = false
+	# Tab toggles the quest tracker open/closed (only when a quest is tracked,
+	# since there's nothing to show otherwise)
+	if Input.is_action_just_pressed("quest_tracker_toggle") and QuestManager.tracked_quest:
+		tracker_hidden = not tracker_hidden
 		update_quest_tracker()
 
 func _on_coins_changed(coins: int):
