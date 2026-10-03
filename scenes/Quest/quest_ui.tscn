@@ -1,18 +1,33 @@
 [gd_scene format=3 uid="uid://da40ruc6qq07k"]
 
 [ext_resource type="Script" uid="uid://cd37m204j3d6e" path="res://scripts/Quest/quest_ui.gd" id="1_1ltue"]
+[ext_resource type="Texture2D" uid="uid://dh3dqp3asharc" path="res://art/UI/DialogBox_4x.png" id="2_g4887"]
 [ext_resource type="PackedScene" uid="uid://bsowj8ovow6bf" path="res://scenes/UI/game_button_square.tscn" id="2_xru0f"]
+[ext_resource type="FontFile" uid="uid://cjf27r6t2lkmu" path="res://third_party/YosterIslandRegular-VqMe.ttf" id="3_pqaq6"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0u54d"]
-bg_color = Color(0, 0.10021403, 0.21414724, 1)
+[sub_resource type="Theme" id="Theme_g4887"]
+default_font = ExtResource("3_pqaq6")
+Button/colors/font_color = Color(0.9865766, 0.9246456, 0.79064626, 1)
+Button/colors/font_disabled_color = Color(0.1254902, 0.09019608, 0.011764706, 0.5)
+Button/colors/font_focus_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+Button/colors/font_hover_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+Button/colors/font_hover_pressed_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+Button/colors/font_pressed_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+Label/colors/font_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0dqb1"]
-bg_color = Color(0, 0.30713603, 0.62775457, 1)
-border_width_right = 10
-border_color = Color(1.8049032e-07, 0.099743776, 0.25075826, 1)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_14pkp"]
+texture = ExtResource("2_g4887")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nk1ib"]
-bg_color = Color(0, 0.17675954, 0.34688026, 1)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xxdmc"]
+texture = ExtResource("2_g4887")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
 
 [node name="QuestUI" type="Control" unique_id=1779177137]
 layout_mode = 3
@@ -27,12 +42,16 @@ script = ExtResource("1_1ltue")
 layer = 2
 
 [node name="Panel" type="Panel" parent="CanvasLayer" unique_id=1667369757]
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 47.0
+offset_top = 41.0
+offset_right = -51.0
+offset_bottom = -41.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_0u54d")
+theme = SubResource("Theme_g4887")
 
 [node name="Backgrounds" type="HBoxContainer" parent="CanvasLayer/Panel" unique_id=1762532137]
 layout_mode = 1
@@ -43,31 +62,41 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="BG_1" type="Panel" parent="CanvasLayer/Panel/Backgrounds" unique_id=1732161367]
+modulate = Color(1, 1, 1, 0.8235294)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_0dqb1")
+theme_override_styles/panel = SubResource("StyleBoxTexture_14pkp")
 
 [node name="BG_2" type="Panel" parent="CanvasLayer/Panel/Backgrounds" unique_id=616238891]
+modulate = Color(1, 1, 1, 0.8235294)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_nk1ib")
+theme_override_styles/panel = SubResource("StyleBoxTexture_xxdmc")
 
 [node name="Contents" type="VBoxContainer" parent="CanvasLayer/Panel" unique_id=91211031]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 11.0
+offset_right = -11.0
+offset_bottom = -11.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 50
+theme_override_constants/separation = 9
 
 [node name="Headings" type="HBoxContainer" parent="CanvasLayer/Panel/Contents" unique_id=607347381]
 layout_mode = 2
+size_flags_stretch_ratio = 0.0
 
 [node name="List" type="Label" parent="CanvasLayer/Panel/Contents/Headings" unique_id=200689195]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
+offset_transform_enabled = true
+theme_override_colors/font_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+theme_override_fonts/font = ExtResource("3_pqaq6")
 theme_override_font_sizes/font_size = 30
 text = "Available Quests"
 horizontal_alignment = 1
@@ -78,6 +107,8 @@ uppercase = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+theme_override_fonts/font = ExtResource("3_pqaq6")
 theme_override_font_sizes/font_size = 30
 text = "Quest Details"
 horizontal_alignment = 1
@@ -87,7 +118,8 @@ uppercase = true
 [node name="Details" type="HBoxContainer" parent="CanvasLayer/Panel/Contents" unique_id=93392970]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 10
+offset_transform_enabled = true
+theme_override_constants/separation = 31
 
 [node name="QuestList" type="VBoxContainer" parent="CanvasLayer/Panel/Contents/Details" unique_id=216929405]
 layout_mode = 2
@@ -101,6 +133,8 @@ theme_override_constants/separation = 10
 
 [node name="QuestTitle" type="Label" parent="CanvasLayer/Panel/Contents/Details/QuestDetails" unique_id=726883677]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+theme_override_fonts/font = ExtResource("3_pqaq6")
 theme_override_font_sizes/font_size = 20
 text = "Title"
 horizontal_alignment = 1
@@ -108,6 +142,8 @@ vertical_alignment = 1
 
 [node name="QuestDescription" type="Label" parent="CanvasLayer/Panel/Contents/Details/QuestDetails" unique_id=1914655971]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+theme_override_fonts/font = ExtResource("3_pqaq6")
 theme_override_font_sizes/font_size = 20
 text = "Description"
 
@@ -122,6 +158,7 @@ visible = false
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.98728555, 0.924142, 0.7923885, 1)
 theme_override_font_sizes/font_size = 20
 text = "Track"
 

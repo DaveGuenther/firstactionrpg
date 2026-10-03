@@ -6,6 +6,9 @@
 [ext_resource type="FontFile" uid="uid://cjf27r6t2lkmu" path="res://third_party/YosterIslandRegular-VqMe.ttf" id="4_18exe"]
 [ext_resource type="PackedScene" uid="uid://bsowj8ovow6bf" path="res://scenes/UI/game_button_square.tscn" id="5_0jeyp"]
 
+[sub_resource type="Theme" id="Theme_occ1p"]
+default_font = ExtResource("4_18exe")
+
 [node name="HUD" type="CanvasLayer" unique_id=956470869]
 script = ExtResource("1_hud")
 
@@ -95,6 +98,7 @@ uppercase = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+theme = SubResource("Theme_occ1p")
 
 [node name="CloseButton" parent="QuestTracker" unique_id=1671677178 instance=ExtResource("5_0jeyp")]
 layout_mode = 1

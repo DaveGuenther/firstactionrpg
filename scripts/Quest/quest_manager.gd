@@ -21,7 +21,16 @@ var quests = {} # quest_id -> accepted Quest instance
 var tracked_quest: Quest = null
 
 func _ready():
+	# Keep running while the game is paused so the quest log can be closed
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	Inventory.item_changed.connect(_on_inventory_changed)
+
+# Open/Close the quest log. Handled here rather than in the player because
+# the player stops processing while the log has the game paused.
+func _input(event):
+	if event.is_action_pressed("ui_quest_menu"):
+		show_hide_log()
+		get_viewport().set_input_as_handled()
 
 # Accept a quest from its definition. Does nothing if already accepted.
 func accept_quest(definition: Quest):
@@ -136,5 +145,7 @@ func complete_quest(quest: Quest):
 		if objective.target_type == Objective.Type.COLLECTION:
 			Inventory.remove_item(objective.target_id, objective.required_quantity)
 
+# Pause the world (player, enemies, etc.) while the quest log is open
 func show_hide_log():
 	quest_ui.show_hide_log()
+	get_tree().paused = quest_ui.panel.visible

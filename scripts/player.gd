@@ -218,7 +218,3 @@ func interact():
 					Inventory.add_item(target.item_id, target.item_quantity)
 					WorldState.mark_item_collected(target.get_instance_key())
 					target.queue_free()
-	
-	# Open/Close quest log
-	if Input.is_action_just_pressed("ui_quest_menu"):
-		QuestManager.show_hide_log()

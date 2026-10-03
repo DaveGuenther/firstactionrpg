@@ -141,4 +141,5 @@ func _on_objectives_updated(_quest_id: String, _objectives_id: String):
 	refresh()
 
 func _on_close_button_pressed():
-	show_hide_log()
+	# Through the manager so the game unpauses
+	quest_manager.show_hide_log()

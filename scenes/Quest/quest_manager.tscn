@@ -8,6 +8,7 @@ script = ExtResource("1_cqyer")
 
 [node name="QuestUI" parent="." unique_id=1779177137 instance=ExtResource("2_wkidx")]
 visible = false
+modulate = Color(1, 1, 1, 0.88235295)
 anchors_preset = 10
 anchor_bottom = 0.0
 grow_vertical = 1
