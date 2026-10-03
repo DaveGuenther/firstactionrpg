@@ -1,0 +1,607 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/Inventory/inventory_ui.gd" id="1_script"]
+[ext_resource type="Theme" path="res://themes/ui_theme.tres" id="2_theme"]
+[ext_resource type="Texture2D" uid="uid://dh3dqp3asharc" path="res://art/UI/DialogBox_4x.png" id="3_box"]
+[ext_resource type="Texture2D" uid="uid://cgtihgh28m6k2" path="res://art/UI/GameButtonSquare4x.png" id="4_btn"]
+[ext_resource type="Texture2D" uid="uid://d28r2gy1f1btl" path="res://art/characters/player.png" id="5_player"]
+[ext_resource type="PackedScene" path="res://scenes/UI/item_slot.tscn" id="6_slot"]
+[ext_resource type="PackedScene" uid="uid://bsowj8ovow6bf" path="res://scenes/UI/game_button_square.tscn" id="7_close"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_box"]
+content_margin_left = 14.0
+content_margin_top = 12.0
+content_margin_right = 14.0
+content_margin_bottom = 12.0
+texture = ExtResource("3_box")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tab_normal"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
+texture = ExtResource("4_btn")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+region_rect = Rect2(0, 0, 52, 52)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tab_hover"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
+texture = ExtResource("4_btn")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+region_rect = Rect2(52, 0, 52, 52)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tab_pressed"]
+content_margin_left = 16.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+texture = ExtResource("4_btn")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(104, 0, 52, 52)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_focus"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_tabs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_preview"]
+atlas = ExtResource("5_player")
+region = Rect2(14, 19, 21, 26)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health"]
+bg_color = Color(0.72, 0.2, 0.18, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_attack"]
+bg_color = Color(0.85, 0.5, 0.15, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_defense"]
+bg_color = Color(0.25, 0.4, 0.7, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_speed"]
+bg_color = Color(0.3, 0.6, 0.3, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+
+[node name="InventoryUI" type="CanvasLayer"]
+process_mode = 3
+layer = 2
+visible = false
+script = ExtResource("1_script")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 47.0
+offset_top = 41.0
+offset_right = -51.0
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_theme")
+theme_override_styles/panel = SubResource("StyleBoxTexture_box")
+
+[node name="Margin" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="Columns" type="HBoxContainer" parent="Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="CharacterColumn" type="VBoxContainer" parent="Panel/Margin/Columns"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="CharacterArea" type="HBoxContainer" parent="Panel/Margin/Columns/CharacterColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="ArmorSlots" type="VBoxContainer" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Helmet" type="VBoxContainer" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea/ArmorSlots"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea/ArmorSlots/Helmet"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Helmet"
+horizontal_alignment = 1
+
+[node name="HelmetSlot" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea/ArmorSlots/Helmet" instance=ExtResource("6_slot")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Breastplate" type="VBoxContainer" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea/ArmorSlots"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea/ArmorSlots/Breastplate"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Breastplate"
+horizontal_alignment = 1
+
+[node name="BreastplateSlot" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea/ArmorSlots/Breastplate" instance=ExtResource("6_slot")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Bracers" type="VBoxContainer" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea/ArmorSlots"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea/ArmorSlots/Bracers"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Bracers"
+horizontal_alignment = 1
+
+[node name="BracersSlot" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea/ArmorSlots/Bracers" instance=ExtResource("6_slot")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Leggings" type="VBoxContainer" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea/ArmorSlots"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea/ArmorSlots/Leggings"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Leggings"
+horizontal_alignment = 1
+
+[node name="LeggingsSlot" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea/ArmorSlots/Leggings" instance=ExtResource("6_slot")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Shoes" type="VBoxContainer" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea/ArmorSlots"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea/ArmorSlots/Shoes"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Shoes"
+horizontal_alignment = 1
+
+[node name="ShoesSlot" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea/ArmorSlots/Shoes" instance=ExtResource("6_slot")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="PlayerPreview" type="TextureRect" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+texture = SubResource("AtlasTexture_preview")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="WeaponSlots" type="VBoxContainer" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea"]
+layout_mode = 2
+alignment = 1
+
+[node name="Weapon" type="VBoxContainer" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea/WeaponSlots"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea/WeaponSlots/Weapon"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Weapon"
+horizontal_alignment = 1
+
+[node name="WeaponSlot" parent="Panel/Margin/Columns/CharacterColumn/CharacterArea/WeaponSlots/Weapon" instance=ExtResource("6_slot")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="StatsPanel" type="PanelContainer" parent="Panel/Margin/Columns/CharacterColumn"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_box")
+
+[node name="StatsBox" type="VBoxContainer" parent="Panel/Margin/Columns/CharacterColumn/StatsPanel"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="Panel/Margin/Columns/CharacterColumn/StatsPanel/StatsBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Stats"
+horizontal_alignment = 1
+
+[node name="StatsGrid" type="GridContainer" parent="Panel/Margin/Columns/CharacterColumn/StatsPanel/StatsBox"]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 6
+columns = 3
+
+[node name="HealthLabel" type="Label" parent="Panel/Margin/Columns/CharacterColumn/StatsPanel/StatsBox/StatsGrid"]
+layout_mode = 2
+text = "Health"
+
+[node name="HealthBar" type="ProgressBar" parent="Panel/Margin/Columns/CharacterColumn/StatsPanel/StatsBox/StatsGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 16)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/fill = SubResource("StyleBoxFlat_health")
+show_percentage = false
+
+[node name="HealthValue" type="RichTextLabel" parent="Panel/Margin/Columns/CharacterColumn/StatsPanel/StatsBox/StatsGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_vertical = 4
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 0
+
+[node name="AttackLabel" type="Label" parent="Panel/Margin/Columns/CharacterColumn/StatsPanel/StatsBox/StatsGrid"]
+layout_mode = 2
+text = "Attack"
+
+[node name="AttackBar" type="ProgressBar" parent="Panel/Margin/Columns/CharacterColumn/StatsPanel/StatsBox/StatsGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 16)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/fill = SubResource("StyleBoxFlat_attack")
+show_percentage = false
+
+[node name="AttackValue" type="RichTextLabel" parent="Panel/Margin/Columns/CharacterColumn/StatsPanel/StatsBox/StatsGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_vertical = 4
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 0
+
+[node name="DefenseLabel" type="Label" parent="Panel/Margin/Columns/CharacterColumn/StatsPanel/StatsBox/StatsGrid"]
+layout_mode = 2
+text = "Defense"
+
+[node name="DefenseBar" type="ProgressBar" parent="Panel/Margin/Columns/CharacterColumn/StatsPanel/StatsBox/StatsGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 16)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/fill = SubResource("StyleBoxFlat_defense")
+show_percentage = false
+
+[node name="DefenseValue" type="RichTextLabel" parent="Panel/Margin/Columns/CharacterColumn/StatsPanel/StatsBox/StatsGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_vertical = 4
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 0
+
+[node name="SpeedLabel" type="Label" parent="Panel/Margin/Columns/CharacterColumn/StatsPanel/StatsBox/StatsGrid"]
+layout_mode = 2
+text = "Speed"
+
+[node name="SpeedBar" type="ProgressBar" parent="Panel/Margin/Columns/CharacterColumn/StatsPanel/StatsBox/StatsGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 16)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/fill = SubResource("StyleBoxFlat_speed")
+show_percentage = false
+
+[node name="SpeedValue" type="RichTextLabel" parent="Panel/Margin/Columns/CharacterColumn/StatsPanel/StatsBox/StatsGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_vertical = 4
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 0
+
+[node name="MysteriansColumn" type="VBoxContainer" parent="Panel/Margin/Columns"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="Panel/Margin/Columns/MysteriansColumn"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Mysterians"
+
+[node name="MysterianRows" type="VBoxContainer" parent="Panel/Margin/Columns/MysteriansColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Row0" type="HBoxContainer" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Slot" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows/Row0" instance=ExtResource("6_slot")]
+custom_minimum_size = Vector2(88, 64)
+layout_mode = 2
+
+[node name="Fused" type="CheckButton" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows/Row0"]
+visible = false
+layout_mode = 2
+focus_mode = 0
+text = "Fused"
+
+[node name="Row1" type="HBoxContainer" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Slot" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows/Row1" instance=ExtResource("6_slot")]
+custom_minimum_size = Vector2(88, 64)
+layout_mode = 2
+
+[node name="Fused" type="CheckButton" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows/Row1"]
+visible = false
+layout_mode = 2
+focus_mode = 0
+text = "Fused"
+
+[node name="Row2" type="HBoxContainer" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Slot" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows/Row2" instance=ExtResource("6_slot")]
+custom_minimum_size = Vector2(88, 64)
+layout_mode = 2
+
+[node name="Fused" type="CheckButton" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows/Row2"]
+visible = false
+layout_mode = 2
+focus_mode = 0
+text = "Fused"
+
+[node name="Row3" type="HBoxContainer" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Slot" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows/Row3" instance=ExtResource("6_slot")]
+custom_minimum_size = Vector2(88, 64)
+layout_mode = 2
+
+[node name="Fused" type="CheckButton" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows/Row3"]
+visible = false
+layout_mode = 2
+focus_mode = 0
+text = "Fused"
+
+[node name="Row4" type="HBoxContainer" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Slot" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows/Row4" instance=ExtResource("6_slot")]
+custom_minimum_size = Vector2(88, 64)
+layout_mode = 2
+
+[node name="Fused" type="CheckButton" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows/Row4"]
+visible = false
+layout_mode = 2
+focus_mode = 0
+text = "Fused"
+
+[node name="Row5" type="HBoxContainer" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Slot" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows/Row5" instance=ExtResource("6_slot")]
+custom_minimum_size = Vector2(88, 64)
+layout_mode = 2
+
+[node name="Fused" type="CheckButton" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows/Row5"]
+visible = false
+layout_mode = 2
+focus_mode = 0
+text = "Fused"
+
+[node name="Row6" type="HBoxContainer" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Slot" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows/Row6" instance=ExtResource("6_slot")]
+custom_minimum_size = Vector2(88, 64)
+layout_mode = 2
+
+[node name="Fused" type="CheckButton" parent="Panel/Margin/Columns/MysteriansColumn/MysterianRows/Row6"]
+visible = false
+layout_mode = 2
+focus_mode = 0
+text = "Fused"
+
+[node name="InventoryFrame" type="PanelContainer" parent="Panel/Margin/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_box")
+
+[node name="InventoryBox" type="VBoxContainer" parent="Panel/Margin/Columns/InventoryFrame"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Header" type="HBoxContainer" parent="Panel/Margin/Columns/InventoryFrame/InventoryBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="Panel/Margin/Columns/InventoryFrame/InventoryBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "Inventory"
+uppercase = true
+
+[node name="ItemsTab" type="Button" parent="Panel/Margin/Columns/InventoryFrame/InventoryBox/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_colors/font_color = Color(0.96862745, 0.8392157, 0.5647059, 1)
+theme_override_colors/font_hover_color = Color(0.99215686, 0.9529412, 0.87058824, 1)
+theme_override_colors/font_pressed_color = Color(0.99215686, 0.9529412, 0.87058824, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.99215686, 0.9529412, 0.87058824, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxTexture_tab_normal")
+theme_override_styles/hover = SubResource("StyleBoxTexture_tab_hover")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_tab_pressed")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_tab_pressed")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_tabs")
+text = "Items"
+
+[node name="WeaponsTab" type="Button" parent="Panel/Margin/Columns/InventoryFrame/InventoryBox/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_colors/font_color = Color(0.96862745, 0.8392157, 0.5647059, 1)
+theme_override_colors/font_hover_color = Color(0.99215686, 0.9529412, 0.87058824, 1)
+theme_override_colors/font_pressed_color = Color(0.99215686, 0.9529412, 0.87058824, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.99215686, 0.9529412, 0.87058824, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxTexture_tab_normal")
+theme_override_styles/hover = SubResource("StyleBoxTexture_tab_hover")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_tab_pressed")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_tab_pressed")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_tabs")
+text = "Weapons"
+
+[node name="ArmorTab" type="Button" parent="Panel/Margin/Columns/InventoryFrame/InventoryBox/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_colors/font_color = Color(0.96862745, 0.8392157, 0.5647059, 1)
+theme_override_colors/font_hover_color = Color(0.99215686, 0.9529412, 0.87058824, 1)
+theme_override_colors/font_pressed_color = Color(0.99215686, 0.9529412, 0.87058824, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.99215686, 0.9529412, 0.87058824, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxTexture_tab_normal")
+theme_override_styles/hover = SubResource("StyleBoxTexture_tab_hover")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_tab_pressed")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_tab_pressed")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_tabs")
+text = "Armor"
+
+[node name="MysteriansTab" type="Button" parent="Panel/Margin/Columns/InventoryFrame/InventoryBox/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_colors/font_color = Color(0.96862745, 0.8392157, 0.5647059, 1)
+theme_override_colors/font_hover_color = Color(0.99215686, 0.9529412, 0.87058824, 1)
+theme_override_colors/font_pressed_color = Color(0.99215686, 0.9529412, 0.87058824, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.99215686, 0.9529412, 0.87058824, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxTexture_tab_normal")
+theme_override_styles/hover = SubResource("StyleBoxTexture_tab_hover")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_tab_pressed")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_tab_pressed")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_tabs")
+text = "Mysterians"
+
+[node name="CloseSpacer" type="Control" parent="Panel/Margin/Columns/InventoryFrame/InventoryBox/Header"]
+custom_minimum_size = Vector2(44, 0)
+layout_mode = 2
+
+[node name="GridScroll" type="ScrollContainer" parent="Panel/Margin/Columns/InventoryFrame/InventoryBox"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ItemGrid" type="GridContainer" parent="Panel/Margin/Columns/InventoryFrame/InventoryBox/GridScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 8
+
+[node name="EmptyLabel" type="Label" parent="Panel/Margin/Columns/InventoryFrame/InventoryBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Nothing here yet."
+horizontal_alignment = 1
+
+[node name="Details" type="RichTextLabel" parent="Panel/Margin/Columns/InventoryFrame/InventoryBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+bbcode_enabled = true
+
+[node name="CloseButton" parent="Panel" instance=ExtResource("7_close")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -52.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = 52.0
+grow_horizontal = 0
+focus_mode = 0
+text = "X"

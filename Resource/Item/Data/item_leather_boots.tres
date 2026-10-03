@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://Resource/Item/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://art/UI/icons/leather_boots.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+id = "item_leather_boots"
+display_name = "Leather Boots"
+description = "Light boots made for travel."
+icon = ExtResource("2_icon")
+category = 2
+slot = 5
+speed_bonus = 2

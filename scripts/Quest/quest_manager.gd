@@ -145,7 +145,6 @@ func complete_quest(quest: Quest):
 		if objective.target_type == Objective.Type.COLLECTION:
 			Inventory.remove_item(objective.target_id, objective.required_quantity)
 
-# Pause the world (player, enemies, etc.) while the quest log is open
+# MenuManager pauses the world (player, enemies, etc.) while the log is open
 func show_hide_log():
-	quest_ui.show_hide_log()
-	get_tree().paused = quest_ui.panel.visible
+	MenuManager.toggle_menu(quest_ui)

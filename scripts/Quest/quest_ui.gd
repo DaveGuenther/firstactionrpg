@@ -24,9 +24,13 @@ func _ready():
 	quest_manager.objective_updated.connect(_on_objectives_updated)
 	quest_manager.tracked_quest_changed.connect(_on_tracked_quest_changed)
 
-func show_hide_log():
-	panel.visible = !panel.visible
+# Called by MenuManager -- open/close the log with QuestManager.show_hide_log()
+func open_menu():
+	panel.visible = true
 	refresh()
+
+func close_menu():
+	panel.visible = false
 
 # Rebuild the quest list and the details of the viewed quest
 func refresh():
@@ -141,5 +145,4 @@ func _on_objectives_updated(_quest_id: String, _objectives_id: String):
 	refresh()
 
 func _on_close_button_pressed():
-	# Through the manager so the game unpauses
-	quest_manager.show_hide_log()
+	MenuManager.close_menu()

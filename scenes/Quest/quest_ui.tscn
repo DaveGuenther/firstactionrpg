@@ -4,16 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dh3dqp3asharc" path="res://art/UI/DialogBox_4x.png" id="2_g4887"]
 [ext_resource type="PackedScene" uid="uid://bsowj8ovow6bf" path="res://scenes/UI/game_button_square.tscn" id="2_xru0f"]
 [ext_resource type="FontFile" uid="uid://cjf27r6t2lkmu" path="res://third_party/YosterIslandRegular-VqMe.ttf" id="3_pqaq6"]
-
-[sub_resource type="Theme" id="Theme_g4887"]
-default_font = ExtResource("3_pqaq6")
-Button/colors/font_color = Color(0.9865766, 0.9246456, 0.79064626, 1)
-Button/colors/font_disabled_color = Color(0.1254902, 0.09019608, 0.011764706, 0.5)
-Button/colors/font_focus_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
-Button/colors/font_hover_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
-Button/colors/font_hover_pressed_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
-Button/colors/font_pressed_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
-Label/colors/font_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+[ext_resource type="Theme" path="res://themes/ui_theme.tres" id="5_theme"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_14pkp"]
 texture = ExtResource("2_g4887")
@@ -51,7 +42,7 @@ offset_right = -51.0
 offset_bottom = -41.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_g4887")
+theme = ExtResource("5_theme")
 
 [node name="Backgrounds" type="HBoxContainer" parent="CanvasLayer/Panel" unique_id=1762532137]
 layout_mode = 1

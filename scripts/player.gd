@@ -68,7 +68,8 @@ func player_movement(delta):
 		
 	else:
 		velocity += (input * accel * delta)
-		velocity = velocity.limit_length(max_speed)
+		# Speed gear raises the top speed (PlayerStats.get_speed)
+		velocity = velocity.limit_length(max_speed * PlayerStats.get_speed_multiplier())
 		
 		# Turn raycast towward direction
 		ray_cast_2d.target_position=input*25
@@ -143,7 +144,8 @@ func _on_player_hitbox_body_exited(body: Node2D) -> void:
 
 func enemy_attack():
 	if enemy_in_attack_range and enemy_attack_cooldown:
-		PlayerStats.take_damage(20)
+		# Reduced by the player's defense
+		PlayerStats.take_hit(20)
 		enemy_attack_cooldown=false
 		$damage_cooldown.start()
 		print(PlayerStats.health)
@@ -198,7 +200,7 @@ func hit_enemies():
 		return
 	for body in $player_hitbox.get_overlapping_bodies():
 		if body.is_in_group("enemies") and body.has_method("take_damage"):
-			body.take_damage(20)
+			body.take_damage(PlayerStats.get_attack())
 	
 
 func interact():

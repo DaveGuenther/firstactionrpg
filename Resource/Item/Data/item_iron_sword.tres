@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://Resource/Item/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://art/UI/icons/iron_sword.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+id = "item_iron_sword"
+display_name = "Iron Sword"
+description = "A dependable iron blade."
+icon = ExtResource("2_icon")
+category = 1
+slot = 6
+attack_bonus = 5

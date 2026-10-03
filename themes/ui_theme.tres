@@ -1,0 +1,37 @@
+[gd_resource type="Theme" format=3]
+
+[ext_resource type="FontFile" uid="uid://cjf27r6t2lkmu" path="res://third_party/YosterIslandRegular-VqMe.ttf" id="1_font"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_bg"]
+bg_color = Color(0.1254902, 0.09019608, 0.011764706, 0.25)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_fill"]
+bg_color = Color(0.6, 0.35, 0.15, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+
+[resource]
+default_font = ExtResource("1_font")
+Button/colors/font_color = Color(0.9865766, 0.9246456, 0.79064626, 1)
+Button/colors/font_disabled_color = Color(0.1254902, 0.09019608, 0.011764706, 0.5)
+Button/colors/font_focus_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+Button/colors/font_hover_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+Button/colors/font_hover_pressed_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+Button/colors/font_pressed_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+CheckButton/colors/font_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+CheckButton/colors/font_focus_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+CheckButton/colors/font_hover_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+CheckButton/colors/font_hover_pressed_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+CheckButton/colors/font_pressed_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+Label/colors/font_color = Color(0.1254902, 0.09019608, 0.011764706, 1)
+ProgressBar/styles/background = SubResource("StyleBoxFlat_bar_bg")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_bar_fill")
+RichTextLabel/colors/default_color = Color(0.1254902, 0.09019608, 0.011764706, 1)

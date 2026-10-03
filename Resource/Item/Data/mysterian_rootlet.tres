@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://Resource/Item/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://art/UI/icons/mysterian_rootlet.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+id = "mysterian_rootlet"
+display_name = "Rootlet"
+description = "A mossy little stone spirit that grows roots wherever it sits."
+icon = ExtResource("2_icon")
+category = 3
+health_bonus = 15
+defense_bonus = 2
